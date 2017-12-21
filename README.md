@@ -31,6 +31,6 @@
 * [《setTimeout函数的一个使用技巧》](https://github.com/chenxiaochun/blog/issues/6)
 * [《nginx模块之ngx_http_sub_module》](https://github.com/chenxiaochun/blog/issues/5)
 * [《使用Docker部署nodejs服务》](https://github.com/chenxiaochun/blog/issues/3)
-* [《svg贝塞尔曲线》](https://github.com/chenxiaochun/blog/issues/2)
+* [《svg贝塞尔曲线》](./article/svg贝塞尔曲线.md)
 * [《你应该知道的npm技巧》](./article/你应该知道的npm技巧.md)
 
