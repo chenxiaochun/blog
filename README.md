@@ -1,6 +1,6 @@
 ## 日常随笔
 
-* [git常用操作总结](./article/git常用操作总结.md)
+* [《git常用操作总结》](./article/git常用操作总结.md)
 * [《理解css中的贝塞尔曲线函数：cubic-bezier》](https://github.com/chenxiaochun/blog/issues/45)
 * [《JSON-Schema（上篇）》](https://github.com/chenxiaochun/blog/issues/43)
 * [《Puppeteer：模拟浏览器操作行为的利器》](https://github.com/chenxiaochun/blog/issues/38)
