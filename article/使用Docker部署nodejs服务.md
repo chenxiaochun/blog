@@ -50,7 +50,7 @@ docker ps
 }
 ```
 执行`vi service.js`，编写nodejs代码：
-```
+```js
 var express = require('express');
 var PORT = 8080;
 var app = express();
