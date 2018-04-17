@@ -33,19 +33,19 @@ git checkout -b [name]
 
 ### 查看分支：
 
-* 查看本地分支
+查看本地分支
 
 ```
 git branch -l
 ```
 
-* 查看远程分支
+查看远程分支
 
 ```
 git branch -r
 ```
 
-* 查看本地分支以及远程分支
+查看本地分支以及远程分支
 
 ```
 git branch -a
@@ -53,19 +53,19 @@ git branch -a
 
 ### 删除分支
 
-* 删除本地分支
+删除本地分支
 
 ```
 git branch -d branch_name
 ```
 
-* 有时候，由于某些原因无法删除分支时，可以使用强制删除
+有时候，由于某些原因无法删除分支时，可以使用强制删除
 
 ```
 git branch -D branch_name
 ```
 
-* 删除远程分支
+删除远程分支
 
 ```
 git branch -r -d branch_name
