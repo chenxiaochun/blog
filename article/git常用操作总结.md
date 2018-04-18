@@ -179,13 +179,8 @@ git log
 
 * `git log --stat`，查看每一次的提交都修改了哪些文件
 * `git log -p`，深入查看每一个文件的修改细节
-* `git show [tree-ish]`，查看某一次提交的修改细节
+* `git log --pretty=oneline fileName`，查看某一具体文件的改动历史
 
-### 查看某一文件的改动历史
-
-```
-git log --pretty=oneline 文件名
-```
 
 ### 查看某一次 commit 的相关改动
 
