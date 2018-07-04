@@ -1,5 +1,6 @@
 ## 日常随笔
 
+* [《技术债：the good, the bad, and the tao》](https://zhuanlan.zhihu.com/p/23765415)
 * [《波兰漫画家 Pawel Kuczynski》](https://www.google.com.hk/search?q=Pawel+Kuczynski&newwindow=1&safe=strict&rlz=1C5CHFA_enCN721JP721&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjxnoPOnZXYAhUMjpQKHdhhDRAQ_AUICigB&biw=1407&bih=890&dpr=1)
 * [《反击爬虫，前端工程师的脑洞可以有多大？》](http://litten.me/2017/07/09/prevent-spiders/)
 * [《Ant Design TreeSelect 组件的显示隐藏事件》](https://github.com/chenxiaochun/blog/issues/54) 
