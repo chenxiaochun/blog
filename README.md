@@ -1,5 +1,6 @@
 ## 日常随笔
 
+* [《WebSocket 是什么原理？为什么可以实现持久连接？》](https://www.zhihu.com/question/20215561/answer/40316953)
 * [《巧用 css 渐变》](https://github.com/chenxiaochun/blog/issues/4)
 * [《【区块链之菜鸟入门】亲，你淘的区块链到了！》](https://yq.aliyun.com/articles/60131?spm=5176.100239.blogcont65264.8.ENbRPS)
 * [《技术债：the good, the bad, and the tao》](https://zhuanlan.zhihu.com/p/23765415)
