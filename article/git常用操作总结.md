@@ -195,3 +195,11 @@ git log
 ```
 git show hash_id
 ```
+
+### 执行`git pull`时提示："refusing to merge unrelated histories"
+
+遇到此错误提示时，可以执行：
+
+```
+git pull origin master --allow-unrelated-histories
+```
