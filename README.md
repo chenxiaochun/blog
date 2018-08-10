@@ -1,6 +1,6 @@
 ## 日常随笔
 
-* [一篇文章搞定 javascript 正则表达式](https://juejin.im/post/5b6adc7ee51d4534b8587560)
+* [《一篇文章搞定 javascript 正则表达式》](https://juejin.im/post/5b6adc7ee51d4534b8587560)
 * [《作为一个前端，可以如何机智地弄坏一台电脑？》](http://litten.me/2015/07/06/hack-in-localstorage/)
 * [《svg 实例集合》](https://github.com/chenxiaochun/svg-living-example)
 * [《WebSocket 是什么原理？为什么可以实现持久连接？》](https://www.zhihu.com/question/20215561/answer/40316953)
