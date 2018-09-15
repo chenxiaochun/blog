@@ -1,5 +1,6 @@
 ## 日常随笔
 
+* [《Chrome69 新特性介绍》](https://github.com/chenxiaochun/blog/issues/63)
 * [《React Fiber初探》](http://blog.codingplayboy.com/2017/12/02/react_fiber/)
 * [《一篇文章搞定 javascript 正则表达式》](https://juejin.im/post/5b6adc7ee51d4534b8587560)
 * [《作为一个前端，可以如何机智地弄坏一台电脑？》](http://litten.me/2015/07/06/hack-in-localstorage/)
