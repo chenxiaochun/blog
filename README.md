@@ -1,5 +1,6 @@
 ## 日常随笔
 
+* [《TypeScript 开发总结》](https://github.com/chenxiaochun/blog/issues/58)
 * [《vim 常用操作总结》](https://github.com/chenxiaochun/blog/issues/60)
 * [《图解 React 生命周期》](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
 * [《Chrome69 新特性介绍》](https://github.com/chenxiaochun/blog/issues/63)
