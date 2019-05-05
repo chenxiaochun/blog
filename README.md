@@ -1,4 +1,4 @@
-## 日常随笔
+## 我的博客
 
 * [《TypeScript 开发总结》](https://github.com/chenxiaochun/blog/issues/58)
 * [《vim 常用操作总结》](https://github.com/chenxiaochun/blog/issues/60)
