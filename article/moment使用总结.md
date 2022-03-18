@@ -22,14 +22,14 @@ moment().add(2, 'day').diff(moment(), 'day')
 `startOf`，将时间设置为以某个点的开始时间：
 
 ```js
-moment().startOf('yar') // 设置为今年的 00:00:00
+moment().startOf('year') // 设置为今年的 00:00:00
 moment().startOf('day') // 设置为今天的 00:00:00
 ```
 
 `endOf`，将时间设置为以某个点的结束时间：
 
 ```js
-moment().endOf('yar') // 设置为今年的 23:59:59
+moment().endOf('year') // 设置为今年的 23:59:59
 moment().endOf('day') // 设置为今天的 23:59:59
 ```
 
