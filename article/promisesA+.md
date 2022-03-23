@@ -15,3 +15,13 @@ Although the Promises/A+ organization may occasionally revise this specification
 * `value`就是一个任意的 js 合法变量（包括：`undefined`、一个`thenable`对象、或者是一个`promise`对象
 * `exception`就是一个使用`throw`抛出的异常变量值
 * `reason`指的是一个`promise`被拒绝时的原因
+
+#### Promise 状态
+
+一个 promise 必须是这三种状态之一：`pending`、`fulfilled`、`rejected`
+
+1. 当 promise 为`pending`状态时，它可能会转变为`fulfilled`或者`rejected`状态
+2. 当 promise 为`fulfilled`状态时，它就不能再转变为任何其它状态了，而且必须带有一个不可变的 value
+3. 当 promise 为`rejected`状态时，它也不能再转变为任何其它状态了，而且必须带有一个不可变的原因
+
+Here, “must not change” means immutable identity (i.e. ===), but does not imply deep immutability.
