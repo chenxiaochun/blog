@@ -153,7 +153,103 @@ body {
 </body>
 ```
 
-这里的话，sidebar 的背景色为灰色。因为在 module 会自动去引用离它最近的祖先元素上定义的变量
+最终 sidebar 的背景色为灰色。因为在 module 会自动去引用离它最近的祖先元素上定义的变量
+
+媒体查询里定义的 css 变量会覆盖之前的定义：
+
+```css
+body {
+  --foo: skyblue;
+}
+
+@media (max-width: 1200px) {
+  body {
+    --foo: orange;
+  } 
+}
+
+.box{
+  height: 300px;
+  background: var(--foo);
+}
+```
+
+
+## 在`:root`上定义变量
+
+在`:root`上定义变量等同于在`html`元素上定义：
+
+```css
+:root {
+  --color: red;
+}
+
+html {
+  --color: red;
+}
+```
+
+## `var`函数默认值机制
+
+`var`函数支持默认参数
+
+下面示例中，如果`--scale`没有定义的话，会使用默认值`1.2`：
+
+```css
+.bigger {
+  transform: scale(var(--scale, 1.2));
+}
+```
+
+下面示例中，如果`--scale`没有定义，会去尝试使用`--second-fallback`的值，如果它也没有定义，就会使用默认值`1.2`：
+
+```css
+.bigger {
+  transform: scale(var(--scale, var(--second-fallback, 1.2));
+}
+```
+
+## `calc`函数和自定义变量
+
+```css
+main {
+  --spacing: 2rem;
+}
+
+.module {
+  padding: var(--spacing);
+}
+
+.module.tight {
+  /* 必须要在运算符之间添加空格 */
+  padding: calc(var(--spacing) / 2)); 
+}
+```
+
+另外一个技巧：
+
+下面的`--font-size`来源于两个变量值的相乘。但是，在浏览器中并不支持这种用法：
+
+```css
+body {
+  --base-font-size: 16px;
+  --modifier: 2;
+  --font-size: var(--base-font-size) * var(--modifier);
+  font-size: var(--font-size);
+}
+```
+
+但是，如果把它们放在`calc`中就能运行了：
+
+```css
+body {
+  --base-font-size: 16px;
+  --modifier: 2;
+  --font-size: var(--base-font-size) * var(--modifier);
+
+  font-size: calc(var(--font-size));
+}
+```
 
 ### 相关文章
 
