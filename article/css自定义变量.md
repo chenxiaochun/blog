@@ -211,6 +211,8 @@ html {
 
 ## `calc`函数和自定义变量
 
+在`calc`中使用自定义变量，只是必须要在运算符之间添加空格
+
 ```css
 main {
   --spacing: 2rem;
@@ -221,14 +223,11 @@ main {
 }
 
 .module.tight {
-  /* 必须要在运算符之间添加空格 */
   padding: calc(var(--spacing) / 2)); 
 }
 ```
 
-另外一个技巧：
-
-下面的`--font-size`来源于两个变量值的相乘。但是，在浏览器中并不支持这种用法：
+另外一个技巧。下面的`--font-size`等于两个变量值的乘积。但是，在浏览器中并不支持这种用法：
 
 ```css
 body {
@@ -248,6 +247,48 @@ body {
   --font-size: var(--base-font-size) * var(--modifier);
 
   font-size: calc(var(--font-size));
+}
+```
+
+## 使用`initial`和『空格』的技巧
+
+在自定义变量中使用`initial`会触发使用默认值回退机制，但使用空格却不会触发这个机制
+
+```html
+<div class="module">
+  123
+</div>
+
+<div class="module dark">
+  456
+</div>
+```
+
+下面的示例，在`:root`上定义了两个变量：`--ON`和`--OFF`
+
+在`.module`上定义了一个`--dark`变量，并引用了`var(--OFF)`。然后在`background`上使用`--dark`，也就间接的引用了`--OFF`。但因为`--OFF`的默认值为空格，不会触发默认值回退机制。
+在`color`属性上也同理。所以，最终第一个`div`上最终展示为白底黑字
+
+在`.dark`上就好理解了，因为我们在第二个`div`上同时了`module dark`，而且在`.dark`上重新定义了`--dark`，导致覆盖了`.module`上定义的`--dark`变量。又因为它引用的`--ON`变量，默认值为`initial`会触发默认值回退机制。所以，最终展示的就是黑底白字了
+
+```css
+:root {
+  --ON: initial;
+  --OFF: ;
+}
+
+.module {
+  --dark: var(--OFF);
+  padding: 1rem;
+
+  background: var(--dark, black);
+  color: var(--dark, white);
+  letter-spacing: var(--dark, 0.2px);
+  border: var(--dark, 3px solid #888);
+}
+
+.dark {
+  --dark: var(--ON);
 }
 ```
 
