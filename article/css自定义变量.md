@@ -51,22 +51,6 @@ html {
 }
 ```
 
-```html
-<div class="box">这是一段文字</div>
-```
-
-```css
-@property --my-color {
-  syntax: '<color>';
-  inherits: false;
-  initial-value: #fff;
-}
-
-.box {
-  color: var(--my-color);
-}
-```
-
 可以根据需要，将自定义变量进行拆分再组合：
 
 ```css
