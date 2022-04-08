@@ -292,6 +292,65 @@ body {
 }
 ```
 
-### 相关文章
+## 使用 js 操作自定义变量
+
+```js
+element.style.setProperty('--x', value);
+```
+
+下面是一个使用 js 操作自定义变量，使得红色方块能够跟随鼠标移动的示例：
+
+```html
+<div class="mover"></div>
+```
+
+```css
+.mover {
+  width: 50px;
+  height: 50px;
+  background: red;
+  position: absolute;
+  left: var(--mouse-x);
+  top: var(--mouse-y);
+}
+```
+
+```js
+let root = document.documentElement;
+
+root.addEventListener("mousemove", e => {
+  root.style.setProperty('--mouse-x', e.clientX + "px");
+  root.style.setProperty('--mouse-y', e.clientY + "px");
+});
+```
+
+一般来说，都是从 js 传值给 css。但其实反过来，也是可以的：
+
+```css
+html {
+  --logic: if (x > 5) document.body.style.background = "blue";
+}
+```
+
+```js
+const x = 10;
+const logic = getComputedStyle(document.documentElement).getPropertyValue(
+  "--logic"
+);
+
+eval(logic);
+```
+
+## 使用`@supports`判断当前浏览器是否支持自定义变量
+
+```css
+@supports (--custom: property) {
+}
+
+@supports not (--custom: property) {
+}
+```
+
+## 相关文章
 
 * https://css-tricks.com/a-complete-guide-to-custom-properties/#top-of-site
