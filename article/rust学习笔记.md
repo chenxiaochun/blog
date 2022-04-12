@@ -1,4 +1,4 @@
-监听本地文件变化，并自动编译运行：
+### 监听本地文件变化，并自动编译运行：
 
 ```
 cargo install cargo-watch
@@ -8,7 +8,7 @@ cargo install cargo-watch
 cargo watch -x run
 ```
 
-`dbg!`函数：
+### `dbg!`函数：
 
 通过它打印内容，输出的内容会带文件名、行号等信息，方便进行程序调试。建议需要打印日志时，可以使用`dbg!`来代替`println!`
 
@@ -20,3 +20,49 @@ dbg!(log);
 ```
 [src/main.rs:8] log = "我是一条日志"
 ```
+
+### Rust GC 机制：
+
+对于 Rust 而言，安全和性能是写到骨子里的核心特性。如果使用 GC，就会牺牲性能；如果使用手动管理内存，就会牺牲安全，这该怎么办？Rust 的机制是：变量在离开作用域后，就会自动释放其占用的内存
+
+```rust
+{
+  let s = String::from("hello"); // 从此处起，s 是有效的
+
+  // 使用 s
+} // 此作用域已结束，
+  // s 不再有效，内存被释放
+```
+
+### 引入其它文件模块
+
+1. 被引入的文件与`main.rs`处于同一层级目录中
+
+```
+src/
+├── main.rs
+└── say.rs
+```
+
+`say.rs`的内容：
+
+```rust
+mod say {
+  pub fn hello () {
+    println!("hello");
+  }
+}
+```
+
+`main.rs`的内容：
+
+```rust
+mod say;
+
+fn main() {
+    say::say::hello();
+}
+```
+
+如果使用了`use say::say:hello;`，则可直接调用`hello();`
+
