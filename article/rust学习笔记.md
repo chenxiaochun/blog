@@ -1,3 +1,20 @@
+### vscode 环境配置
+
+安装插件：
+
+[rust-analyzer](https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer)，这个不是官方插件，据说官方的问题太多，所以基本都在推荐此插件
+
+保存代码自动格式化：
+
+```json
+{
+  "[rust]": {
+    "editor.defaultFormatter": "matklad.rust-analyzer",
+    "editor.formatOnSave": true
+  }
+}
+```
+
 ### 监听本地文件变化，并自动编译运行
 
 ```
