@@ -63,7 +63,16 @@ wasm-bindgen = "0.2"
 wasm-pack build --target web
 ```
 
-编译完成之后，项目根目录中会多出一个`pkg`文件夹。它就是 rust 编译为 webAssembly 的 js 文件
+编译完成之后，项目根目录中会多出一个`pkg`文件夹。这里面就是最终产出的 webAssembly js 文件了。可以看到，不仅有可执行的 js 文件，还有相应的类型定义文件
+
+```
+pkg
+├── hello_wasm.d.ts
+├── hello_wasm.js
+├── hello_wasm_bg.wasm
+├── hello_wasm_bg.wasm.d.ts
+└── package.json
+```
 
 ### 在 web 中使用它
 
@@ -90,6 +99,8 @@ wasm-pack build --target web
 
 </html>
 ```
+
+需要在本地开启一个静态服务器环境，可以使用：`npx http-server -c-1`。如果一切没问题，就可以看到一个 alert 弹窗了
 
 
 
