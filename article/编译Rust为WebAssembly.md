@@ -1,4 +1,4 @@
-新建一个新工程，别忘了添加`--lib`参数。这样生成的`src`目录下会有一个`lib.rs`文件，而不是`main.rs`文件。如果忘了添加此参数，直接将`main.rs`改为`lib.rs`也是可以的
+新建一个工程，别忘了添加`--lib`参数。这样生成的`src`目录下会有一个`lib.rs`文件，而不是`main.rs`文件。如果忘了添加此参数，直接将`main.rs`改为`lib.rs`也是可以的
 
 ```
 cargo new --lib hello_wasm
@@ -101,6 +101,8 @@ pkg
 ```
 
 需要在本地开启一个静态服务器环境，可以使用：`npx http-server -c-1`。如果一切没问题，就可以看到一个 alert 弹窗了
+
+原文链接：https://developer.mozilla.org/en-US/docs/WebAssembly/Rust_to_wasm
 
 
 
