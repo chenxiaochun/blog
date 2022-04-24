@@ -102,6 +102,74 @@ pkg
 
 需要在本地开启一个静态服务器环境，可以使用：`npx http-server -c-1`。如果一切没问题，就可以看到一个 alert 弹窗了
 
+### 再看另外一个加和求值的示例
+
+```rust
+use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+pub fn sum(value: i32) -> i32 {
+    let mut s = 0;
+    for i in 0..=value {
+        s += i;
+    }
+    s
+}
+```
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>hello-wasm example</title>
+</head>
+
+<body>
+  <script>
+    const target = 10000
+  </script>
+  <script type="module">
+    import init, { sum } from './pkg/hello_wasm.js'
+
+    init().then(() => {
+      console.time('rust timer')
+      console.log('rust result is: ', sum(target))
+      console.timeEnd('rust timer')
+    });
+  </script>
+
+  <script>
+    function sum(value) {
+      let sum = 0
+      for (let i = 0; i <= value; i++) {
+        sum += i
+      }
+      return sum
+    }
+
+    console.time('js timer')
+    console.log('js result is: ', sum(target))
+    console.timeEnd('js timer')
+  </script>
+</body>
+
+</html>
+```
+
+从 0 加到 10000，可以看到 rust 的计算时间比 js 快了一倍多：
+
+输出结果：
+
+```
+js result is:  50005000
+js timer: 0.31396484375 ms
+
+rust result is:  50005000
+rust timer: 0.118896484375 ms
+```
+
 原文链接：https://developer.mozilla.org/en-US/docs/WebAssembly/Rust_to_wasm
 
 
