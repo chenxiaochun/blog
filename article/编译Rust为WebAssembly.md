@@ -20,17 +20,14 @@ pub fn greet(name: &str) {
 }
 ```
 
-`wasm_bindgen::prelude`将会引入其全部模块。我理解类似于 js 中的`import * as module from './module'`
+简单解释一下其中的代码释义：
 
-`#[]`语法，在 rust 中被称为『属性』，它会以某种方式改变下面的那条语句的行为，此处为`extern`
-
-`extern`用来告诉 rust，下面调用的函数是需要从外部获取的，而且是要从`wasm_bindgen`那里去获取。`alert`接受一个引用类型的参数，具体为什么是这种类型。需要去了解 rust 的
+* `wasm_bindgen::prelude`将会引入其全部模块。类似于 js 中的`import * as module from './module'`
+* `#[]`语法，在 rust 中被称为『属性』，它会以某种方式改变下面的那条语句的行为，此处为`extern`
+* `extern`用来告诉 rust，下面调用的函数是需要从外部获取的，而且是要从`wasm_bindgen`那里去获取。`alert`接受一个引用类型的参数，具体为什么是这种类型。需要去了解 rust 的
 所有权和借用机制
-
-接着下面的`#[wasm_bindgen]`用来修饰`fn`语句，前面添加`pub`将此函数暴露出去，用来被外部调用。它的含义正好和`extern`是相反的。`greet`函数调用了上面的`alert`函数，并且给它传递一个经过
-`format!`宏处理过的参数
-
-`format!`宏接受两个参数，其实就是将后面的`name`参数值塞到了`{}`处
+* 接着下面的`#[wasm_bindgen]`用来修饰`fn`语句，前面添加`pub`将此函数暴露出去，用来被外部调用。它的含义正好和`extern`是相反的。`greet`函数调用了上面的`alert`函数，并且给它传递一个经过`format!`宏处理过的参数
+* `format!`宏接受两个参数，其实就是将后面的`name`参数值塞到了`{}`处
 
 ### 编译 Rust 为 WebAssembly
 
@@ -40,7 +37,7 @@ pub fn greet(name: &str) {
 cargo install wasm-pack
 ```
 
-在项目的`Caro.toml`文件中添加以下配置：
+在项目的`Cargo.toml`文件中添加以下配置：
 
 ```toml
 [package]
@@ -104,6 +101,8 @@ pkg
 
 ### 再看另外一个加和求值的示例
 
+rust 求和代码：
+
 ```rust
 use wasm_bindgen::prelude::*;
 
@@ -116,6 +115,8 @@ pub fn sum(value: i32) -> i32 {
     s
 }
 ```
+
+在 html 中写了两种计算方式。一种是调用 webAssembly 进行求和，另外一种是直接使用 js 进行求和。然后分别输出它们的计算结果和消耗时间来进行对比：
 
 ```html
 <!DOCTYPE html>
@@ -158,9 +159,7 @@ pub fn sum(value: i32) -> i32 {
 </html>
 ```
 
-从 0 加到 10000，可以看到 rust 的计算时间比 js 快了一倍多：
-
-输出结果：
+从 0 加到 10000，从输出时间可以看到 rust 的计算时间比 js 快了三倍左右：
 
 ```
 js result is:  50005000
