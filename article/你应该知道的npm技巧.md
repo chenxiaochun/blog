@@ -205,5 +205,23 @@ npm xmas
 npm visnup
 ```
 
+### 25、安装一个包的多个版本
+
+比如，项目中已经存在了一个 antd 版本。现在想要同时再安装另一个版本：
+
+```
+yarn add antd4@npm:antd@4.19.5
+```
+
+之后，在`package.json`中就会有这样一条依赖：
+
+```json
+{
+  "dependencies": {
+    "antd4": "npm:antd@4.19.5",
+  }
+}
+```
+
 ### 参考资料：
 * https://nodesource.com/blog/eleven-npm-tricks-that-will-knock-your-wombat-socks-off/
