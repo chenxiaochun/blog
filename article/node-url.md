@@ -26,6 +26,8 @@ url.format({
 url.parse("/test?a=1#hash")
 ```
 
+我们看`query`属性，它的值还是字符串的形式。如果想要将其转换为对象，需要将`parse`方法的第二个参数设置为`true`
+
 ```js
 {
   "protocol": null,
@@ -43,7 +45,7 @@ url.parse("/test?a=1#hash")
 }
 ```
 
-重点看`query`属性，它的值还是字符串的形式。如果想要将其转换为对象，需要将`parse`方法的第二个参数设置为`true`
+重新输出：
 
 ```js
 url.parse("/test?a=1#hash", true)
@@ -65,7 +67,7 @@ url.parse("/test?a=1#hash", true)
 url.parse("//foo/bar")
 ```
 
-下面的输出中，没有对 url path 以斜线做进一步的解析，而是直接将其都放到了`pathname`属性中
+从下面的输出结果中的`pathname`属性可以看到。`parse`方法没有对传入的 url 以斜线做进一步的解析，而是直接将其作为了`pathname`属性值
 
 ```js
 {
@@ -84,7 +86,7 @@ url.parse("//foo/bar")
 }
 ```
 
-而在将`parse`方法的第三个参数设置为`true`之后
+如果将`parse`方法的第三个参数设置为`true`之后。以斜线分隔的`foo`被解析成了`host`，而`bar`被解析成了`pathname`
 
 ```js
 {
