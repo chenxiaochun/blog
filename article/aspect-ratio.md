@@ -27,7 +27,7 @@ aspect-ratio: 1 / 0.5; //高度为宽度的 0.5 倍
 
 这个属性尤其适用于限制图片的展示比例：
 
-```csss
+```css
 img {
   border: 1px solid #ccc;
   max-width: 300px;
