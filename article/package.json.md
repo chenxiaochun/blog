@@ -45,7 +45,7 @@ const t = require('test') // 引入的是 bar.cjs
 
 假设`lib-a`和`lib-b`两个组件都依赖了`react`和`react-dom`。此时，如果我们在`lib-a`和`lib-b`中定义了`peerDependencies`，那么就不会重复下载`react`和`react-dom`依赖了
 
-```
+```text
 node_modules
   ├── lib-a
   ├── lib-b
