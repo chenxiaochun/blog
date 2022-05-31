@@ -28,6 +28,7 @@
   - [2. `:host-context([选择器])`](#2-host-context选择器)
   - [3. `:defined`](#3-defined)
   - [4. `::slotted([选择器])`](#4-slotted选择器)
+  - [5. `::part([选择器])`](#5-part选择器)
 - [参数资料](#参数资料)
 
 <!-- /code_chunk_output -->
@@ -716,6 +717,47 @@ customElements.define('custom-ele', CustomEle, { extends: 'div' })
 ```
 
 ![](https://img10.360buyimg.com/imagetools/jfs/t1/202656/22/8929/212063/615453c4E04896c69/5146f61915043ebc.jpg)
+
+### 5. `::part([选择器])`
+
+`part`属性可以使用空格分隔添加多个属性名称。只有在`shadow-dom`中使用`part`属性时，才能使用`::part`伪类选择器进行选择
+
+```html
+<template id="box-element">
+  <style type="text/css">
+    *,
+    ::before,
+    ::after {
+      box-sizing: border-box;
+      padding: 1rem;
+    }
+
+    :host {
+      display: flex;
+    }
+  </style>
+  <div part="box">test</div>
+</template>
+
+<box-element></box-element>
+
+<script>
+  let template = document.querySelector("#box-element");
+  globalThis.customElements.define(template.id, class extends HTMLElement {
+    constructor() {
+      super();
+      this.attachShadow({ mode: "open" });
+      this.shadowRoot.appendChild(template.content);
+    }
+  });
+</script>
+
+<style>
+  box-element::part(box) {
+    color: #0c0dcc;
+  }
+</style>
+```
 
 ## 参数资料
 
