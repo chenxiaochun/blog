@@ -89,5 +89,10 @@ fn main() {
 
 在实际开发中，使用最多的是数组切片，通常使用`&[T]`的方式进行引用，因为它有固定的类型大小
 
+### 学习资料
+
+* Rust and WebAssembly：https://rustwasm.github.io/
+* Rust圣经：https://course.rs
+
 
 
