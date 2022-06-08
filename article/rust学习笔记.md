@@ -93,6 +93,6 @@ fn main() {
 
 * Rust and WebAssembly：https://rustwasm.github.io/
 * Rust圣经：https://course.rs
-
+* 字节提供的 Rust 包下载镜像：https://rsproxy.cn/
 
 
