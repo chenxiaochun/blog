@@ -63,8 +63,6 @@ div {
 这段代码渲染完，div 的背景色一定是`yellow`。因为`l2`被嵌套在`l1`中，它的层级就会比`l1`要低。也就是说：被嵌套的越深，层级越低
 
 ```css
-
-```css
 @layer l1 {
   div {
     background-color: yellow;
