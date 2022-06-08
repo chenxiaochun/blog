@@ -99,6 +99,52 @@ pkg
 
 需要在本地开启一个静态服务器环境，可以使用：`npx http-server -c-1`。如果一切没问题，就可以看到一个 alert 弹窗了
 
+### 在 rust 中调用`console.log`
+
+```rust
+use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = console)]
+    fn log(s: &str);
+
+    #[wasm_bindgen(js_namespace = console, js_name = log)]
+    fn log_u32(a: u32);
+
+    #[wasm_bindgen(js_namespace = console, js_name = log)]
+    fn log_many(a: &str, b: &str);
+}
+
+#[wasm_bindgen]
+pub fn greet(name: &str) {
+    log(name);
+}
+```
+
+执行`wasm-pack build --target web`编译完成之后，在 web 中进行调用：
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>hello-wasm example</title>
+</head>
+
+<body>
+  <script type="module">
+    import init, { greet } from './pkg/hello_wasm.js'
+
+    init().then(() => {
+      greet('Hello Wasm');
+    });
+  </script>
+</body>
+</html>
+```
+
 ### 再看另外一个加和求值的示例
 
 rust 求和代码：
