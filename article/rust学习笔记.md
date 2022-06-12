@@ -93,6 +93,7 @@ fn main() {
 
 * Rust and WebAssembly：https://rustwasm.github.io/
 * Rust圣经：https://course.rs
+* Writing an OS in Rust：https://os.phil-opp.com/?continueFlag=337dcf70445017414c8f184d55fb43c4
 * 微软 Rust 基础教程（非常基础）：https://docs.microsoft.com/zh-cn/learn/paths/rust-first-steps/
 * 字节提供的 Rust 包下载镜像：https://rsproxy.cn/
 
