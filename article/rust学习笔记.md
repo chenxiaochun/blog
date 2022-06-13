@@ -1,10 +1,9 @@
 ### vscode 环境配置
 
-安装插件：
+安装插件[rust-analyzer](https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer)，这个不是官方插件，据说官方的问题太多，所以基本都在推荐此插件
 
-[rust-analyzer](https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer)，这个不是官方插件，据说官方的问题太多，所以基本都在推荐此插件
-
-保存代码自动格式化：
+* 保存代码自动格式化
+* 代码类型自动标注
 
 ```json
 {
@@ -23,6 +22,16 @@ cargo install cargo-watch
 
 ```
 cargo watch -x run
+```
+
+### 安装第三方依赖时，自动将信息加入到`Cargo.toml`
+
+首先需要安装`cargo-edit`，然后就会获得一个扩展命令`cargo add`。以后使用它安装第三方依赖，就能将依赖信息自动写入`Cargo.toml`了
+
+```
+cargo install cargo-edit
+
+cargo add mycrate
 ```
 
 ### `dbg!`函数
