@@ -14,6 +14,25 @@
 }
 ```
 
+### vim 环境配置
+
+```
+Plugin 'rust-analyzer/rust-analyzer'
+Plugin 'rust-lang/rust.vim'
+```
+
+```
+let g:ale_linters = {
+\   'rust': ['analyzer']
+\}
+```
+
+```
+let g:rustfmt_autosave = 1
+```
+
+[https://github.com/rust-lang/rust-analyzer/issues/769](https://github.com/rust-lang/rust-analyzer/issues/769#issuecomment-463524385)
+
 ### 监听本地文件变化，并自动编译运行
 
 ```
