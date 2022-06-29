@@ -1,3 +1,4 @@
+* [html script 标签的`crossorigin`属性使用说明](./article/script.crossorigin.md)
 * [git根据条件自动调整配置](./article/git根据条件自动调整配置.md)
 * [css-@layer](./article/css-@layer.md)
 * [编译Rust为WebAssembly](./article/编译Rust为WebAssembly.md)
