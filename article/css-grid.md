@@ -13,7 +13,7 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 
 ### `grid`容器
 
-一个被添加了`display: grid`的元素就称为`grid`容器，它就是所有子元素的直接父元素
+一个被添加了`display: grid`的元素就被称为`grid`容器，例如下面的`container`元素
 
 ```html
 <div class="container">
@@ -23,23 +23,23 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 </div>
 ```
 
-### `grid`元素
+### `grid`项
 
-一个`grid`容器下面的所有直接子元素都被称为`grid`元素。在这里就是所有`class="item"`的元素，但是不包括`class="sub-item"`的元素
+一个`grid`容器下面的所有直接子元素都被称为`grid`项。在这里就是所有`class="item"`的元素，但是不包括`class="sub-item"`元素。因为它并不是 container 的直接子元素
 
 ```html
 <div class="container">
-  <div class="item"> </div>
+  <div class="item"></div>
   <div class="item">
-    <p class="sub-item"> </p>
+    <p class="sub-item"></p>
   </div>
-  <div class="item"> </div>
+  <div class="item"></div>
 </div>
 ```
 
-### `grid`线
+### `grid`分隔线
 
-就是指的 grid 元素之间水平或者垂直方向的线，例如下面示例中的黄线
+就是指的 grid 项之间水平或者垂直方向的线，例如下面示例中的黄线
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-line.svg" width="300">
 
@@ -56,3 +56,64 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-area.svg" width="300">
 
 ## `grid`属性集合
+
+可用于`grid`容器的属性集合：
+
+1. `display`
+
+* `grid`：生成一个 grid 块级容器
+* `inline-grid`：生成一个 grid 内联级容器
+
+```css
+.container {
+  display: grid | inline-grid;
+}
+```
+
+2. `grid-template-columns`和`grid-template-rows`
+
+它们都可以指定一个以空格分隔的列表，用于定义行和列的尺寸。而空格就会成为 grid 项之间的分隔线
+
+* `<track-size>`：用来指定`grid`轨道尺寸。可以是一个长度、百分比或者是 grid 容器中剩余空间的一部分（单位使用[`fr`](https://css-tricks.com/introduction-fr-css-unit/)）
+* `<line-name>`：用来任意指定你要选择的一个`grid`分隔线的名称
+
+`grid`分隔线会自动被分配一个整数序列号。如果是从开始列（行）到结束列（行），则是从正 1 开始计数。反之，则是从 -1 开始计数：
+
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/template-columns-rows-01.svg" width="400" />
+
+此外，还可以给分隔线指定一个明确的名称：
+
+```css
+.container {
+  grid-template-columns: [first] 40px [line2] 50px [line3] auto [col4-start] 50px [five] 40px [end];
+  grid-template-rows: [row1-start] 25% [row1-end] 100px [third-line] auto [last-line];
+}
+```
+
+一条分隔线还可以有多个名称，比如第二条水平线既可以被称为`row1-end`，也可以被称为`row2-start`。分隔线的名称可以随意定义，可以叫`abc`或者其它什么，这里只是为了名称有意义：
+
+```css
+.container {
+  grid-template-rows: [row1-start] 25% [row1-end row2-start] 25% [row2-end];
+}
+```
+
+而且 chrome dev tools 也提供了查看分隔线名称和序号的功能：
+
+<img src="https://img10.360buyimg.com/imagetools/jfs/t1/208670/1/23588/81256/62c3db0cEac6fd336/b0ad5089e166d762.jpg" width="500">
+
+<img src="https://img10.360buyimg.com/imagetools/jfs/t1/26191/32/17300/13127/62c3dbabEd5901980/dfa4b04bd847c741.jpg" width="500">
+
+<img src="https://img11.360buyimg.com/imagetools/jfs/t1/213382/30/19651/57785/62c3dc2fE089c626c/d418213fb32a84d3.jpg" width="500">
+
+
+如果定义的列（行）布局有重复的部分，可以使用`repeat()`函数进行简写：
+
+```css
+.container {
+  grid-template-columns: repeat(3, 20px [col-start]);
+  /* 相当于
+  /* grid-template-columns: 20px [col-start] 20px [col-start] 20px [col-start]; */
+}
+```
+
