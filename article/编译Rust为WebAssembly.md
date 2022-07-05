@@ -215,7 +215,10 @@ rust result is:  50005000
 rust timer: 0.118896484375 ms
 ```
 
-原文链接：https://developer.mozilla.org/en-US/docs/WebAssembly/Rust_to_wasm
+## 相关资源
+
+* 原文链接：https://developer.mozilla.org/en-US/docs/WebAssembly/Rust_to_wasm
+* [WebAssembly生态及关键技术综述](https://mp.weixin.qq.com/s?__biz=MzkxNDIzNTg4MA==&mid=2247487410&idx=1&sn=906c0ba9d0d38416865d4a27caa3a060)
 
 
 
