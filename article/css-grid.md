@@ -9,11 +9,11 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 
 ## 重要术语解释
 
-因为 css grid 引入了很多术语在概念上差不多，所以需要提前明确一下，以免后面搞糊涂
+因为 css grid 引入了很多新术语和概念，所以需要提前明确一下，以免后面搞不清楚
 
-### `grid`容器
+### grid container
 
-一个被添加了`display: grid`的元素就被称为`grid`容器，例如下面的`container`元素
+一个添加了`display: grid`的元素就被称为 grid container，例如下面`class="container"`的元素
 
 ```html
 <div class="container">
@@ -22,10 +22,11 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
   <div class="item item-3"> </div>
 </div>
 ```
+### grid item
 
-### `grid`项
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-cell.svg" width="300">
 
-一个`grid`容器下面的所有直接子元素都被称为`grid`项。在这里就是所有`class="item"`的元素，但是不包括`class="sub-item"`元素。因为它并不是 container 的直接子元素
+一个 grid container 下面的所有直接子元素都被称为 grid item。在下面示例中指的就是所有`class="item"`的元素，但是不包括`class="sub-item"`元素。因为它并不是 grid container 的直接子元素
 
 ```html
 <div class="container">
@@ -37,32 +38,27 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 </div>
 ```
 
-### `grid`分隔线
+### grid line
 
-就是指的 grid 项之间水平或者垂直方向的线，例如下面示例中的黄线
+就是指的 grid item 之间水平或者垂直方向的线，例如下面示例中的黄线
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-line.svg" width="300">
 
-### `grid`单元格
 
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-cell.svg" width="300">
-
-### `grid`轨道
+### grid track
 
 <img src="https://css-tricks.com/wp-content/uploads/2021/08/terms-grid-track.svg" width="300">
 
-### `grid`区域
+### grid area
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-area.svg" width="300">
 
 ## `grid`属性集合
 
-可用于`grid`容器的属性集合：
-
 ### `display`
 
-* `grid`：生成一个 grid 块级容器
-* `inline-grid`：生成一个 grid 内联级容器
+* `grid`：生成一个块级元素的 grid container
+* `inline-grid`：生成一个内联级的 grid container
 
 ```css
 .container {
@@ -72,16 +68,16 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 
 ### `grid-template-columns`和`grid-template-rows`
 
-1. 它们都可以指定一个以空格分隔的列表，用于定义行和列的尺寸。而空格就会成为 grid 项之间的分隔线
+1. 它们都可以指定一个以空格分隔的列表，用于定义行和列的尺寸。而空格就会成为 grid item 之间的分隔线
 
-* `<track-size>`：用来指定`grid`轨道尺寸。可以是一个长度、百分比或者是 grid 容器中剩余空间的一部分（单位使用[`fr`](https://css-tricks.com/introduction-fr-css-unit/)）
-* `<line-name>`：用来任意指定你要选择的一个`grid`分隔线的名称
+* `<track-size>`：用来指定 grid track 的尺寸。可以是一个长度、百分比或者是 grid container 中剩余空间的一部分（单位使用[`fr`](https://css-tricks.com/introduction-fr-css-unit/)）
+* `<line-name>`：用来任意指定你要选择的一个 grid line 的名称
 
-`grid`分隔线会自动被分配一个整数序列号。如果是从开始列（行）到结束列（行），则是从正 1 开始计数。反之，则是从 -1 开始计数：
+第个 grid line 都会带有一个整数序列号。如果是从开始列（行）到结束列（行），则是从正 1 开始计数。反之，则是从 -1 开始计数：
 
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/template-columns-rows-01.svg" width="400" />
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/template-columns-rows-01.svg" width="500" />
 
-2. 可以给分隔线指定一个明确的名称：
+2. 可以给 grid line 自定义一个名称，也就是下面中括号括起来的部分。first 表示第一条竖线的名称，line2 表示第二条竖线的名称，依此类推。同理，row1-start 表示第一条横线的名称，row1-end 表示第二条横线的名称
 
 ```css
 .container {
@@ -90,7 +86,7 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 }
 ```
 
-一条分隔线还可以有多个名称，比如第二条水平线既可以被称为`row1-end`，也可以被称为`row2-start`。分隔线的名称可以随意定义，可以叫`abc`或者其它什么，这里只是为了名称有意义：
+每条分隔线都可以有多个名称，比如第二条水平线既可以被称为`row1-end`，也可以被称为`row2-start`。分隔线的名称可以随意定义，可以叫`abc`或者其它什么：
 
 ```css
 .container {
@@ -145,5 +141,49 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 }
 ```
 
+### `grid-column-start`、`grid-row-start`、`grid-column-end`、`grid-row-end`
 
+这几个选择器都只能用于 grid item。用来定义 grid item 在一个 grid container 中的行列起止位置
+
+
+```html
+<div class="container">
+  <div class="item-a">One</div>
+</div>
+```
+
+```css
+.container {
+  background: #eee;
+  display: grid;
+  width: 500px;
+  height: 500px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.container div {
+  border: 5px solid skyblue;
+}
+
+.item-a {
+  grid-row-start: 1;
+  grid-column-start: 2;
+  grid-row-end: 3;
+  grid-column-end: 3;
+}
+```
+
+在上面示例中，将 grid container 设置为了四列，每列的宽度为`1fr`。然后指定`item-a`的行列起止位置为`1/2/3/3`，也就是从第一行、第二列开始，至第三列、第三行结束。那它的渲染结果就是：
+
+<img src="https://img12.360buyimg.com/imagetools/jfs/t1/129835/2/29402/11596/62c4f9f2E98fdf4d4/20467c17f8b1ac93.png" width="400">
+
+其实给`item-a`设置的四条选择器可以简化为一条`grid-area: 1/2/2/3`，效果是完全相同的
+
+### `grid-area`和`grid-template-areas`
+
+## 相关资源
+
+* https://css-tricks.com/snippets/css/complete-guide-grid/
+* https://cssgrid-generator.netlify.app/
+* https://grid.layoutit.com/
 
