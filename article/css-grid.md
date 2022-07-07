@@ -76,7 +76,7 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 
 ### `grid-template-columns`和`grid-template-rows`
 
-这个属性用于将 grid container 划分成若干格子，每个格子被称为 grid item。例如将一个宽度和高度都等于`500px`的 grid container 都划分成`4*4`的格子
+这两个属性用于将 grid container 划分成若干格子，每个格子被称为 grid item。例如将一个宽度和高度都等于`500px`的 grid container 都划分成`4*4`的格子
 
 ```css
 .container {
@@ -90,7 +90,7 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 ```
 点击打开 grid container 上的 grid 开关，就会看到虚线划分的 grid item：
 
-<img src="https://img10.360buyimg.com/imagetools/jfs/t1/92653/6/29512/10407/62c64e20E5afe9bf3/dfe283f32774fc35.png" width="300">
+<img src="https://img10.360buyimg.com/imagetools/jfs/t1/92653/6/29512/10407/62c64e20E5afe9bf3/dfe283f32774fc35.png" width="400">
 
 在这里，我们的 grid item 尺寸单位用的`fr`（也可以换成长度、百分比等其它单位），`fr`是在 grid 布局中添加的一个新单位，用于表示 grid container 的剩余空间大小。在此示例中因为将空间分成了 4 等份，所以`1fr`就等于 grid container 的四分之一大小。这个在后面也会详细讲
 
@@ -100,81 +100,60 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 
 <img src="https://img14.360buyimg.com/imagetools/jfs/t1/11540/15/17844/13940/62c651e6E2538492d/d0a6d6bbc16e12ee.png" width="500">
 
----
-
----
-
-1. 它们都可以指定一个以空格分隔的列表，用于定义行和列的尺寸。而空格就会成为 grid item 之间的分隔线
-
-* `<track-size>`：用来指定 grid track 的尺寸。可以是一个长度、百分比或者是 grid container 中剩余空间的一部分（单位使用[`fr`](https://css-tricks.com/introduction-fr-css-unit/)）
-* `<line-name>`：用来任意指定你要选择的一个 grid line 的名称
-
-每个 grid line 都会带有一个整数序列号。：
-
-
-2. 可以给 grid line 自定义一个名称，也就是下面中括号括起来的部分。first 表示第一条竖线的名称，line2 表示第二条竖线的名称，依此类推。同理，row1-start 表示第一条横线的名称，row1-end 表示第二条横线的名称
+grid line 除了有编号，还可以给它指定一个自定义名称。添加名称的语法就是用中括号括起来：
 
 ```css
 .container {
-  grid-template-columns: [first] 40px [line2] 50px [line3] auto [col4-start] 50px [five] 40px [end];
-  grid-template-rows: [row1-start] 25% [row1-end] 100px [third-line] auto [last-line];
+  background: #eee;
+  display: grid;
+  width: 500px;
+  height: 500px;
+  grid-template-rows: [row1] 1fr [row2] 1fr [row3] 1fr [row4] 1fr;
+  grid-template-columns: [col1] 1fr [col2] 1fr [col3] 1fr [col3] 1fr;
 }
 ```
 
-每条分隔线都可以有多个名称，比如第二条水平线既可以被称为`row1-end`，也可以被称为`row2-start`。分隔线的名称可以随意定义，可以叫`abc`或者其它什么：
+打开开发者工具的`Layout`标签，选择`show line names`，就可以看到 grid line 的名称了：
+
+<img src="https://img13.360buyimg.com/imagetools/jfs/t1/95140/7/29744/17579/62c67eb3E3660b5e5/47ab656150ed0e7d.png" width="500">
+
+每条 grid line 还可以同时拥有多个名称。比如 row2 还可以同时叫做 row1-end：
+
+```css
+grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
+```
+
+<img src="https://img12.360buyimg.com/imagetools/jfs/t1/148627/32/28007/17509/62c67e62E7d971c7e/c5ea2b8b3b63f47e.png" width="500" />
+
+如果相邻多个的 grid line 和 grid item 的名称尺寸都是相同的，则可以直接简写为：
 
 ```css
 .container {
-  grid-template-rows: [row1-start] 25% [row1-end row2-start] 25% [row2-end];
+  grid-template-rows: repeat(4, 1fr [row]);
 }
 ```
 
-而且 chrome dev tools 也提供了查看分隔线名称和序号的功能：
+注意语法为`repeat(4, 1fr [row])`，而不是`repeat(4, [row] 1fr)`，后者是无效的
 
-<img src="https://img10.360buyimg.com/imagetools/jfs/t1/208670/1/23588/81256/62c3db0cEac6fd336/b0ad5089e166d762.jpg" width="500">
+上面一直说`fr`指的是 grid container 的**剩余空间**。其实剩余空间指的就是 grid container 减去非弹性元素空间之后的空间
 
-<img src="https://img10.360buyimg.com/imagetools/jfs/t1/26191/32/17300/13127/62c3dbabEd5901980/dfa4b04bd847c741.jpg" width="500">
-
-<img src="https://img11.360buyimg.com/imagetools/jfs/t1/213382/30/19651/57785/62c3dc2fE089c626c/d418213fb32a84d3.jpg" width="500">
-
-
-3. 如果多个相邻多个`grid`项的定义是相同的，可以使用`repeat()`函数进行简写：
-
-```css
-.container {
-  grid-template-columns: 20px [col-start] 20px [col-start] 20px [col-start];
-}
-```
-
-可以简写为：
-
-```css
-.container {
-  grid-template-columns: repeat(3, 20px [col-start]);
-}
-```
-
-4. `fr`用来设置`grid`项在`grid`容器中剩余空间的尺寸：
-
-例如，下面示例就是将每个`grid`项尺寸设置为`grid`容器剩余空间的**三分之一**大小
-
-```css
-.container {
-  grid-template-columns: 1fr 1fr 1fr;
-}
-```
-
-一直说是**剩余空间**，是因为计算`fr`时，所使用的空间尺寸不包含那些非弹性元素。比如，下面示例中的`1fr`就是：
-
-```
-1fr = (grid 容器尺寸 - 50px) / 3
-```
+来看下面示例，将 grid container 分成了四列：
 
 ```css
 .container {
   grid-template-columns: 1fr 50px 1fr 1fr;
 }
 ```
+
+其中第二列的列宽度为固定的`50px`。因此，`1fr`的计算公式为：
+
+```
+1fr = (grid 容器尺寸 - 50px) / 3
+```
+
+---
+
+---
 
 ### `grid-row-start`、`grid-column-start`、`grid-row-end`、`grid-column-end`
 
