@@ -58,7 +58,7 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 ### `display`
 
 * `grid`：生成一个块级元素的 grid container
-* `inline-grid`：生成一个内联级的 grid container
+* `inline-grid`：生成一个内联级元素的 grid container
 
 ```css
 .container {
@@ -66,16 +66,51 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 }
 ```
 
+一个元素变成 grid container 之后，在用 chrome 开发者工具查看它时，会发现旁边多了一个 grid 开关标识：
+
+<img src="https://img13.360buyimg.com/imagetools/jfs/t1/98296/2/29772/4163/62c64819Edade5d5c/3d28134a8d2fea3e.png" width="400" />
+
+打开此开关，再点击右侧的`layout`标签页，就可以查看更多关于 grid 布局的信息，这个后面会再详细介绍，先知道有这样一个功能就行：
+
+<img src="https://img11.360buyimg.com/imagetools/jfs/t1/78723/7/20056/72460/62c6497dE5761f263/3df5529107f082b2.png" width="600">
+
 ### `grid-template-columns`和`grid-template-rows`
+
+这个属性用于将 grid container 划分成若干格子，每个格子被称为 grid item。例如将一个宽度和高度都等于`500px`的 grid container 都划分成`4*4`的格子
+
+```css
+.container {
+  background: #eee;
+  display: grid;
+  width: 500px;
+  height: 500px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+```
+点击打开 grid container 上的 grid 开关，就会看到虚线划分的 grid item：
+
+<img src="https://img10.360buyimg.com/imagetools/jfs/t1/92653/6/29512/10407/62c64e20E5afe9bf3/dfe283f32774fc35.png" width="300">
+
+在这里，我们的 grid item 尺寸单位用的`fr`（也可以换成长度、百分比等其它单位），`fr`是在 grid 布局中添加的一个新单位，用于表示 grid container 的剩余空间大小。在此示例中因为将空间分成了 4 等份，所以`1fr`就等于 grid container 的四分之一大小。这个在后面也会详细讲
+
+虚线被称为 grid line，它们默认都有自己的整数编号。如果是从开始列（行）到结束列（行），则是从正 1 开始计数。反之，则是从 -1 开始计数。在 chrome 开发者工具，打开`Layout`标签，然后选择`show line numbers`就能看到编号了：
+
+<img src="https://img13.360buyimg.com/imagetools/jfs/t1/197842/40/24838/21820/62c65279E06cbee38/c04cfe44556fc20e.png" width="300">
+
+<img src="https://img14.360buyimg.com/imagetools/jfs/t1/11540/15/17844/13940/62c651e6E2538492d/d0a6d6bbc16e12ee.png" width="500">
+
+---
+
+---
 
 1. 它们都可以指定一个以空格分隔的列表，用于定义行和列的尺寸。而空格就会成为 grid item 之间的分隔线
 
 * `<track-size>`：用来指定 grid track 的尺寸。可以是一个长度、百分比或者是 grid container 中剩余空间的一部分（单位使用[`fr`](https://css-tricks.com/introduction-fr-css-unit/)）
 * `<line-name>`：用来任意指定你要选择的一个 grid line 的名称
 
-第个 grid line 都会带有一个整数序列号。如果是从开始列（行）到结束列（行），则是从正 1 开始计数。反之，则是从 -1 开始计数：
+每个 grid line 都会带有一个整数序列号。：
 
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/template-columns-rows-01.svg" width="500" />
 
 2. 可以给 grid line 自定义一个名称，也就是下面中括号括起来的部分。first 表示第一条竖线的名称，line2 表示第二条竖线的名称，依此类推。同理，row1-start 表示第一条横线的名称，row1-end 表示第二条横线的名称
 
@@ -141,7 +176,7 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 }
 ```
 
-### `grid-column-start`、`grid-row-start`、`grid-column-end`、`grid-row-end`
+### `grid-row-start`、`grid-column-start`、`grid-row-end`、`grid-column-end`
 
 这几个选择器都只能用于 grid item。用来定义 grid item 在一个 grid container 中的行列起止位置
 
