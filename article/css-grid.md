@@ -151,18 +151,15 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 1fr = (grid 容器尺寸 - 50px) / 3
 ```
 
----
-
----
-
 ### `grid-row-start`、`grid-column-start`、`grid-row-end`、`grid-column-end`
 
-这几个选择器都只能用于 grid item。用来定义 grid item 在一个 grid container 中的行列起止位置
+这几个选择器都只能用于 grid item。用来定义 grid item 在一个 grid container 中的开始行、开始列、结束行和结束列的位置
 
+看下面的示例，在 grid container 中有一个子元素。grid container 被划分为了四行四列。
 
 ```html
 <div class="container">
-  <div class="item-a">One</div>
+  <div class="item-a">A</div>
 </div>
 ```
 
@@ -172,28 +169,95 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
   display: grid;
   width: 500px;
   height: 500px;
+  grid-template-rows: repeat(4, 1fr);
   grid-template-columns: repeat(4, 1fr);
 }
 
 .container div {
-  border: 5px solid skyblue;
+  border: 5px solid black;
 }
+```
 
+因为只有一个子元素，默认情况下它会存在于最左上角：
+
+<img src="https://img10.360buyimg.com/imagetools/jfs/t1/195135/4/27338/13994/62c6da64Eb23051bf/84bc0ac41218e9d6.png" width="500" />
+
+如果想让该子元素的位置挪到第二行，第二列的位置，就可以使用这四『兄弟』来指定一下：
+
+```css
 .item-a {
-  grid-row-start: 1;
+  grid-row-start: 2;
   grid-column-start: 2;
   grid-row-end: 3;
   grid-column-end: 3;
 }
 ```
 
-在上面示例中，将 grid container 设置为了四列，每列的宽度为`1fr`。然后指定`item-a`的行列起止位置为`1/2/3/3`，也就是从第一行、第二列开始，至第三列、第三行结束。那它的渲染结果就是：
+<img src="https://img12.360buyimg.com/imagetools/jfs/t1/83641/33/20415/11286/62c6db4eEb27f272a/ac291c4fcd5b6d8f.png" width="500">
 
-<img src="https://img12.360buyimg.com/imagetools/jfs/t1/129835/2/29402/11596/62c4f9f2E98fdf4d4/20467c17f8b1ac93.png" width="400">
+其实，这四条 css 属性完全可以使用`grid-area`简写为一条，它们的作用是一样。只是顺序必须要遵循：开始行/开始列/结束行/结束列
 
-其实给`item-a`设置的四条选择器可以简化为一条`grid-area: 1/2/2/3`，效果是完全相同的
+```css
+.item-a{
+  grid-area: 2/2/3/3;
+}
+```
 
-### `grid-area`和`grid-template-areas`
+### `grid-area`
+
+它除了可以作为上面四『兄弟』的简写之外。还可以用来给 grid item 指定一个名称（注意：这里说的是 grid item，并非 grid line）
+
+那指定了名称有什么用呢？可以被`grid-template-areas`引用，用来定义 grid template。我们来看一个略复杂的示例，在下面的 grid container 中有四个子元素，分别用来表示页面中常见的四个区域：Header、Main、Sidebar 和 Footer
+
+```html
+<div class="container">
+  <div class="item-a">Header</div>
+  <div class="item-b">Main</div>
+  <div class="item-c">Sidebar</div>
+  <div class="item-d">Footer</div>
+</div>
+```
+
+然后使用`grid-area`分别给四个子元素指定了四个名称，并且各指定了一种背景色方便在页面上查看：
+
+```css
+.item-a {
+  grid-area: header;
+  background: orange;
+}
+
+.item-b {
+  grid-area: main;
+  background: skyblue;
+}
+
+.item-c {
+  grid-area: sidebar;
+  background-color: purple;
+}
+
+.item-d {
+  grid-area: footer;
+  background: green;
+}
+```
+
+将 grid container 划分为三行四列，上面也使用`grid-area`对四个子元素指定了名称。现在可以使用`grid-template-areas`引用这些名称，对它们进行重新布局了：
+
+```css
+.container {
+  background: #eee;
+  display: grid;
+  width: 500px;
+  height: 500px;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas: 
+    "header header header header"
+    "main main . sidebar"
+    "footer footer footer footer";
+}
+```
 
 ## 相关资源
 
