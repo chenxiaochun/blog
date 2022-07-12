@@ -212,9 +212,11 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 
 ### `grid-area`和`grid-template-areas`
 
-它除了可以作为上面四『兄弟』的简写之外。还可以用来给 grid item 指定一个名称（注意：这里说的是 grid item，并非 grid line）。那指定了名称有什么用呢？可以被`grid-template-areas`引用，用来定义 grid template
+`grid-area`除了可以作为`grid-row-start`、`grid-column-start`、`grid-row-end`、`grid-column-end`四兄弟的简写之外。还可以用来给 grid item 指定一个名称（注意：这里说的是 grid item，并非 grid line）
 
-我们来看一个略复杂的示例，在下面的 grid container 中有四个子元素，分别表示页面中常见的四个区域，以此来实现这样一个布局，并且完全是自适应的：
+那指定了名称有什么用呢？可以被`grid-template-areas`引用，用来定义 grid template 以实现更为复杂灵活的布局。来看一个示例：
+
+在下面的 grid container 中有四个子元素，分别表示页面中常见的四个区域，以此来实现这样一个布局，并且完全是自适应的：
 
 ```html
 <div class="container">
@@ -277,6 +279,85 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
     "footer footer footer footer";
 }
 ```
+
+注意：在这个示例里，我们只是对 grid item 指定了名称，并没有对 grid line 指定名称。但是，grid line 依旧会被自动赋予相应的名称，因为它是根据 grid item 名称自动添加的
+
+比如，这里第一行的 grid line 的名称是`header-start`，第一列会有多个名称`header-start main-start`，最后一列有三个名称`header-end sidebar-end footer-end`
+
+<img src="https://img14.360buyimg.com/imagetools/jfs/t1/120040/30/24550/15068/62cce583E5f7ece2f/2947726feb967561.png" />
+
+### `grid-template`
+
+此属性可以作为`grid-template-rows`、`grid-template-columns`两者的简写形式。例如：
+
+```css
+.container{
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+}
+```
+
+可以简写成：
+
+```css
+.container{
+  grid-template: repeat(3, 1fr) / repeat(4, 1fr);
+}
+```
+
+它也可以作为`grid-template-areas`和`grid-template-rows`、`grid-template-columns`三兄弟的简写。其语法是：
+
+```
+grid-template: grid-template-areas grid-template-rows / grid-template-column
+```
+
+例如将上面的 container 布局进行简写：
+
+```css
+.container {
+  background: #eee;
+  display: grid;
+  width: 500px;
+  height: 500px;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas: 
+    "header header header header"
+    "main main . sidebar"
+    "footer footer footer footer";
+}
+```
+
+可以简写为：
+
+```css
+.container{
+  background: #eee;
+  display: grid;
+  width: 500px;
+  height: 500px;
+  grid-template:
+    "header header header header" 1fr
+    "main main . sidebar" 1fr
+    "footer footer footer footer" 1fr
+    / 1fr 1fr 1fr 1fr;
+}
+```
+
+应该有人注意到了，斜杠后面的`1fr 1fr 1fr 1fr`是完全相同的，那是不是可以写成`repeat(4, 1fr)`呢？经过我的测试，答案是不可以的。不知道为啥不支持！
+
+### `grid-column-gap`、`grid-row-gap`和`column-gap`、`row-gap`
+
+这几个属性用来设置 grid line 尺寸，其实就是用来设置行和列之间的间距。其中带有`grid-`的前两者是旧的使用方式，现在标准的使用方式应该是后两者（我咋觉得前两者的命名更统一规范呢，也可能是标准组织在下一盘大棋，将来会把它们用在别的地方）
+
+```css
+.container{
+  column-gap: 10px;
+  row-gap: 20px;
+}
+```
+
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/dddgrid-gap.svg" width="400" />
 
 ## 相关资源
 
