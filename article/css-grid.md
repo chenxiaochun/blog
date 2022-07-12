@@ -1,7 +1,14 @@
-css grid，可以简称为 grid。是一种完全和以前所有其它的，都截然不同的 web 布局方式，可以说它完全颠覆了我们设计界面时的方式
+css grid，可以简称为 grid。是一种完全和以前所有其它的，都截然不同的 web 布局方式
 
-对于界面布局，我们曾经都使用过`table`、`float`、`position`定位以及`inline-block`，这些特性用在布局上，其实本质上都是一种 hack，并且它们也不具备我们常用的一些功能，
-比如：垂直居中。这时候，你可能想到了`flexbox`，它确实也是很重要的一种布局工具，但它其实更倾向于控制元素的[对齐方向](https://css-tricks.com/quick-whats-the-difference-between-flexbox-and-grid/)
+对于界面布局，我们曾经都使用过`table`、`float`、`position`定位以及`inline-block`，这些特性用在布局上，其实本质上都是一种 hack，并且它们也不具备我们常用的一些功能
+
+提到 css grid，你可能就会想到 [flex](https://css-tricks.com/quick-whats-the-difference-between-flexbox-and-grid/)。但我觉得前者更倾向于**布局**，后者更倾向于**对齐**
+
+就像房屋的布局是一个不规则的图形，如果用上面提到的传统方式来实现，并且还能要根据整体面积自适应（对于我们来说，就是页面尺寸的自适应），将会是一件很麻烦的事情。而换成 css grid 来实现就会非常简单（为什么简单？看完下面的详细介绍就清楚了）
+
+而一旦整体布局确定之后，房间里的家具到底是左对齐，还是右对齐，来使用 flex 实现就会很简单了
+
+<img src="https://img14.360buyimg.com/imagetools/jfs/t1/177857/38/27131/43095/62ccdcacEf9821e4e/e2dcbeec23b5bb42.jpg" width="600" />
 
 ## 浏览器兼容性
 
@@ -178,7 +185,7 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 }
 ```
 
-因为只有一个子元素，默认情况下它会存在于最左上角：
+因为只有一个子元素，默认情况下它会居于左上角的位置：
 
 <img src="https://img10.360buyimg.com/imagetools/jfs/t1/195135/4/27338/13994/62c6da64Eb23051bf/84bc0ac41218e9d6.png" width="500" />
 
@@ -203,11 +210,11 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 }
 ```
 
-### `grid-area`
+### `grid-area`和`grid-template-areas`
 
-它除了可以作为上面四『兄弟』的简写之外。还可以用来给 grid item 指定一个名称（注意：这里说的是 grid item，并非 grid line）
+它除了可以作为上面四『兄弟』的简写之外。还可以用来给 grid item 指定一个名称（注意：这里说的是 grid item，并非 grid line）。那指定了名称有什么用呢？可以被`grid-template-areas`引用，用来定义 grid template
 
-那指定了名称有什么用呢？可以被`grid-template-areas`引用，用来定义 grid template。我们来看一个略复杂的示例，在下面的 grid container 中有四个子元素，分别用来表示页面中常见的四个区域：Header、Main、Sidebar 和 Footer
+我们来看一个略复杂的示例，在下面的 grid container 中有四个子元素，分别表示页面中常见的四个区域，以此来实现这样一个布局，并且完全是自适应的：
 
 ```html
 <div class="container">
@@ -217,6 +224,10 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
   <div class="item-d">Footer</div>
 </div>
 ```
+
+注意：Main 和 Sidebar 之间的区域是置空的，没有任何元素
+
+<img src="https://img10.360buyimg.com/imagetools/jfs/t1/177675/38/27019/4106/62ccdeddE32435a93/05bf4d507e05df53.png" />
 
 然后使用`grid-area`分别给四个子元素指定了四个名称，并且各指定了一种背景色方便在页面上查看：
 
@@ -242,7 +253,15 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 }
 ```
 
-将 grid container 划分为三行四列，上面也使用`grid-area`对四个子元素指定了名称。现在可以使用`grid-template-areas`引用这些名称，对它们进行重新布局了：
+将 grid container 划分为三行四列，再使用`grid-area`对四个子元素指定了名称。现在可以使用`grid-template-areas`引用这些名称，对它们进行布局了：
+
+这里的关键就在于`grid-template-areas`，它用**换行分隔**了三行代码表示行，每一行中使用**空格分隔**表示列，因此：
+
+* 第一行的 header 占据了四列，所以要写成：`header header header header`
+* 第二行的前两列是 main，第三列是空元素，第四列是 sidebar，所以要写成：`main main . sidebar`
+* 第三行四列都是 footer 占据，所以要写成：`footer footer footer footer`
+
+看着就像矩阵，很形象对不对？通过看这几行代码，都能脑补出来实际的布局大概长什么样子
 
 ```css
 .container {
