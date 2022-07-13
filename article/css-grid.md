@@ -31,8 +31,6 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 ```
 ### grid item
 
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-cell.svg" width="300">
-
 一个 grid container 下面的所有直接子元素都被称为 grid item。在下面示例中指的就是所有`class="item"`的元素，但是不包括`class="sub-item"`元素。因为它并不是 grid container 的直接子元素
 
 ```html
@@ -44,6 +42,10 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
   <div class="item"></div>
 </div>
 ```
+
+### grid cell
+
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-cell.svg" width="300" />
 
 ### grid line
 
@@ -202,7 +204,24 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 
 <img src="https://img12.360buyimg.com/imagetools/jfs/t1/83641/33/20415/11286/62c6db4eEb27f272a/ac291c4fcd5b6d8f.png" width="500">
 
-其实，这四条 css 属性完全可以使用`grid-area`简写为一条，它们的作用是一样。只是顺序必须要遵循：开始行/开始列/结束行/结束列
+上面四兄弟可以用`grid-row`和`grid-column`进行简写：
+
+```css
+.item-a{
+  grid-row: 2/3;
+  grid-column: 2/3;
+}
+```
+
+还可以指定一个相对值。下面的示例表明是从第 2 行开始，到第 4 行结束（相对于开始行加上 2 行）：
+
+```css
+.item-a{
+  grid-row: 2/ span 2;
+}
+```
+
+然后，这两条 css 属性又可以使用`grid-area`简写为一条，只是顺序必须要遵循：开始行/开始列/结束行/结束列
 
 ```css
 .item-a{
@@ -212,7 +231,7 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 
 ### `grid-area`和`grid-template-areas`
 
-`grid-area`除了可以作为`grid-row-start`、`grid-column-start`、`grid-row-end`、`grid-column-end`四兄弟的简写之外。还可以用来给 grid item 指定一个名称（注意：这里说的是 grid item，并非 grid line）
+`grid-area`除了可以作为`grid-row`、`grid-column`两兄弟的简写之外。还可以用来给 grid item 指定一个名称（注意：这里说的是 grid item，并非 grid line）
 
 那指定了名称有什么用呢？可以被`grid-template-areas`引用，用来定义 grid template 以实现更为复杂灵活的布局。来看一个示例：
 
@@ -346,18 +365,125 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 应该有人注意到了，斜杠后面的`1fr 1fr 1fr 1fr`是完全相同的，那是不是可以写成`repeat(4, 1fr)`呢？经过我的测试，答案是不可以的。不知道为啥不支持！
 
-### `grid-column-gap`、`grid-row-gap`和`column-gap`、`row-gap`
+### `grid-row-gap`、`grid-column-gap`和`row-gap`、`column-gap`
 
-这几个属性用来设置 grid line 尺寸，其实就是用来设置行和列之间的间距。其中带有`grid-`的前两者是旧的使用方式，现在标准的使用方式应该是后两者（我咋觉得前两者的命名更统一规范呢，也可能是标准组织在下一盘大棋，将来会把它们用在别的地方）
+这几个属性用来设置 grid line 尺寸，其实就是用来设置行和列之间的间距。其中带有`grid-`的前两者是旧的使用方式，现在标准的使用方式应该是后两者（我咋觉得前两者的命名更统一规范呢，也可能是标准组将来打算把它们用在别的地方）
 
 ```css
 .container{
+  row-gap: 15px;
   column-gap: 10px;
-  row-gap: 20px;
+}
+```
+
+它们可以简写为：
+
+```css
+.container{
+  grid-gap: 15px 10px; /* 旧的使用方式 */
+  gap: 15px 10px; /* 标准使用方式*/
 }
 ```
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/dddgrid-gap.svg" width="400" />
+
+### `justify-self`、`align-self`和`place-self`
+
+这两者都是用来控制 grid item 在 grid cell 中的对齐方向。`justify-self`用来控制水平对齐方向，`align-self`用来控制垂直对齐方向。都是有四个属性值：
+
+```css
+.item {
+  justify-self: start | end | center | stretch;
+  align-self: start | end | center | stretch;
+}
+```
+
+分别看一下每个属性值的效果：
+
+```css
+.item-a {
+  justify-self: start;
+}
+```
+
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-start.svg" width="300" />
+
+```css
+.item-a {
+  justify-self: end;
+}
+```
+
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-end.svg" width="300" />
+
+```css
+.item-a {
+  justify-self: center;
+}
+```
+
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-center.svg" width="300" />
+
+```css
+.item-a {
+  justify-self: stretch;
+}
+```
+
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-stretch.svg" width="300" />
+
+`align-self`同理，这里就不加示例了
+
+`place-self`是这两者的简写形式，语法为：
+
+```
+.item{
+  place-self: <align-self> / <justify-self> 
+}
+```
+
+例如：
+
+```css
+.item-a {
+  place-self: center stretch;
+}
+```
+
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/place-self-center-stretch.svg" width="300" />
+
+### `justify-items`、`align-items`和`place-items`
+
+这几个属性只能用于 grid container 元素，用来控制所有的 grid item 在 grid cell 里的对齐方向。前者用来控制水平方向对齐，后者用来控制垂直方向对齐。也都是有四个属性值：
+
+```css
+.container {
+  justify-items: start | end | center | stretch;
+  align-items: start | end | center | stretch;
+}
+```
+
+例如：
+
+```css
+.container {
+  justify-items: start;
+}
+```
+
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-items-start.svg" width="300" />
+
+其它属性值就不做演示了，道理一样的。`place-items`是前两者的简写形式，语法为：
+
+```
+.container{
+  place-items: <align-items> / <justify-items>
+}
+```
+
+## 各属性关系图
+
+<img src="./css-grid.svg" />
 
 ## 相关资源
 
