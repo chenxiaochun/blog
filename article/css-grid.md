@@ -16,7 +16,9 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 
 ## 重要术语解释
 
-因为 css grid 引入了很多新术语和概念，所以需要提前明确一下，以免后面搞不清楚
+grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。之前一直觉得 flex 的概念已经很多了。但是，和 grid 比起来，还是小巫见大巫了。所以需要提前明确一下这些概念，以免后面搞不清楚
+
+而且，这篇文章即使你完整的学完之后，没有深刻的实践。后面想用的时候，依然会被它复杂的属性搞糊涂。因此，我在最后面画了一张整个 grid 布局属性关系图，以从上帝角度来俯视整个 grid 体系
 
 ### grid container
 
@@ -365,7 +367,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 应该有人注意到了，斜杠后面的`1fr 1fr 1fr 1fr`是完全相同的，那是不是可以写成`repeat(4, 1fr)`呢？经过我的测试，答案是不可以的。不知道为啥不支持！
 
-### `grid-row-gap`、`grid-column-gap`和`row-gap`、`column-gap`
+### `grid-row-gap`、`grid-column-gap`和`row-gap`、`column-gap`和`grid-gap`、`gap`
 
 这几个属性用来设置 grid line 尺寸，其实就是用来设置行和列之间的间距。其中带有`grid-`的前两者是旧的使用方式，现在标准的使用方式应该是后两者（我咋觉得前两者的命名更统一规范呢，也可能是标准组将来打算把它们用在别的地方）
 
@@ -473,7 +475,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-items-start.svg" width="300" />
 
-其它属性值就不做演示了，道理一样的。`place-items`是前两者的简写形式，语法为：
+其它属性值就不做演示了，道理是一样的。`place-items`是前两者的简写形式，语法为：
 
 ```
 .container{
@@ -481,9 +483,68 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
+### `justify-content`、`align-content`和`place-content`
+
+有时候，我们用`grid-template-rows`和`grid-template-columns`在对 grid container 划分时，用的可能都是`px`等绝对单位。这就可能使得所有行或者列加起来的尺寸还是小于 grid container 的整体尺寸，还留有一定的富余空间
+
+例如下面示例中：
+
+* grid container 的宽度和高度都是`500px`
+* 使用`grid-template-rows: repeat(3, 1fr);`定义了 3 行，因为使用的`fr`单位，所以整体的 grid cell 可以占满整个 container 的纵向剩余空间
+* 使用`  grid-template-columns: repeat(2, 100px);`定义了 2 列，每列的宽度为`100px`，总共也才`200px`。整体的 grid cell 无法占满整个 container 的横向空间
+
+```css
+.container {
+  background: #eee;
+  display: grid;
+  width: 500px;
+  height: 500px;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 100px);
+  justify-content: center;
+}
+```
+
+<img src="https://img13.360buyimg.com/imagetools/jfs/t1/211449/7/24393/16910/62ce8bcfEed882ed4/a922e97b00e80385.png" width="500">
+
+这时候，就可以使用`justify-content`来整体控制所有 grid cell 的水平对齐方向。例如，使其水平居中对齐：
+
+```css
+.container{
+  justify-content: center;
+}
+```
+
+<img src="https://img10.360buyimg.com/imagetools/jfs/t1/142714/30/27416/14051/62ce8a06E3cb4851a/8ca1bae68d9fa8b1.png" width="500" />
+
+修改一下代码，使其水平和垂直方向都是居中：
+
+```css
+.container {
+  background: #eee;
+  display: grid;
+  width: 500px;
+  height: 500px;
+  grid-template-rows: repeat(3, 100px);
+  grid-template-columns: repeat(2, 100px);
+  justify-content: center;
+  align-content: center;
+}
+```
+
+也可以使用`place-content`进行简写：
+
+```css
+.container{
+  place-content: center;
+}
+```
+
+<img src="https://img10.360buyimg.com/imagetools/jfs/t1/105846/31/31167/13205/62ce8cbbE437db7c8/373836d989073cfb.png" width="500" />
+
 ## 各属性关系图
 
-<img src="./css-grid.svg" />
+<img src="./css-grid.svg" width="100%" />
 
 ## 相关资源
 
