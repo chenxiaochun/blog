@@ -18,7 +18,7 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 
 grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。之前一直觉得 flex 的概念已经很多了。但是，和 grid 比起来，还是小巫见大巫了。所以需要提前明确一下这些概念，以免后面搞不清楚
 
-而且，这篇文章即使你完整的学完之后，没有深刻的实践。后面想用的时候，依然会被它复杂的属性搞糊涂。因此，我在最后面画了一张整个 grid 布局属性关系图，以从上帝角度来俯视整个 grid 体系
+而且，即使你完整学完这篇教程之后，如果没有深刻的实践。后面想用的时候，依然会被它复杂的属性关系搞糊涂。因此，我在最后面画了一张整个 grid 布局属性关系图，以后想不起来它们之间关系的时候，可以随时打开此图来查看
 
 ### grid container
 
@@ -26,9 +26,9 @@ grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。�
 
 ```html
 <div class="container">
-  <div class="item item-1"> </div>
-  <div class="item item-2"> </div>
-  <div class="item item-3"> </div>
+  <div class="item item-1"></div>
+  <div class="item item-2"></div>
+  <div class="item item-3"></div>
 </div>
 ```
 ### grid item
@@ -267,7 +267,7 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 
 .item-c {
   grid-area: sidebar;
-  background-color: purple;
+  background: purple;
 }
 
 .item-d {
@@ -541,6 +541,75 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 ```
 
 <img src="https://img10.360buyimg.com/imagetools/jfs/t1/105846/31/31167/13205/62ce8cbbE437db7c8/373836d989073cfb.png" width="500" />
+
+### `grid-auto-rows`、`grid-auto-columns`
+
+其实`grid-auto-rows`、`grid-auto-columns`和`grid-template-rows`、`grid-template-columns`的作用是一样的，都是用来给 grid container 划分行列。但它们之间的最大区别就在于前者更多了一些**自动**的特性，
+毕竟名字中就带着一个『auto』
+
+例如在下面示例中 grid container 有四个 grid item，每个 item 都有一个背景色，以方便查看：
+
+```html
+<div class="container">
+  <div class="item-a">A</div>
+  <div class="item-b">B</div>
+  <div class="item-c">C</div>
+  <div class="item-d">D</div>
+</div>
+```
+
+```css
+.container {
+  background: #eee;
+  display: grid;
+  width: 500px;
+  height: 500px;
+}
+
+.item-a {
+  background: orange;
+}
+
+.item-b {
+  background: skyblue;
+}
+
+.item-c {
+  background: purple;
+}
+
+.item-d {
+  background: green;
+}
+```
+
+那默认情况下，它会渲染成这样：
+
+<img src="https://img14.360buyimg.com/imagetools/jfs/t1/137478/13/22385/3675/62cf7d91E339f4558/c02f5d27050975b7.png" width="300" />
+
+如果用`grid-template-rows`、`grid-template-columns`划分成两行两列之后，它会渲染成：
+
+<img src="https://img14.360buyimg.com/imagetools/jfs/t1/208681/12/24585/2641/62cfea88E91b0225c/f403b474ff147546.png" width="300" />
+
+
+现在给 grid container 添加`grid-auto-rows`和`grid-auto-columns`，都是定义了两行两列，尺寸都是`100px`：
+
+```css
+.container {
+  background: #eee;
+  display: grid;
+  width: 500px;
+  height: 500px;
+
+  grid-auto-rows: 100px 100px;
+  grid-auto-columns: 100px 100px;
+}
+```
+
+此时，重新刷新会渲染成：
+
+<img src="https://img10.360buyimg.com/imagetools/jfs/t1/95388/40/29756/8497/62cf815dEa96a738b/e96001bbdaea86dc.png" width="300" />
+
 
 ## 各属性关系图
 
