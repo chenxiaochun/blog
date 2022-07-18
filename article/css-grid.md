@@ -47,22 +47,22 @@ grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。�
 
 ### grid cell
 
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-cell.svg" width="300" />
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-cell.svg" width="500" />
 
 ### grid line
 
 就是指的 grid item 之间水平或者垂直方向的线，例如下面示例中的黄线
 
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-line.svg" width="300">
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-line.svg" width="500">
 
 
 ### grid track
 
-<img src="https://css-tricks.com/wp-content/uploads/2021/08/terms-grid-track.svg" width="300">
+<img src="https://css-tricks.com/wp-content/uploads/2021/08/terms-grid-track.svg" width="500">
 
 ### grid area
 
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-area.svg" width="300">
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-area.svg" width="500">
 
 ## `grid`属性集合
 
@@ -107,7 +107,7 @@ grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。�
 
 虚线被称为 grid line，它们默认都有自己的整数编号。如果是从开始列（行）到结束列（行），则是从正 1 开始计数。反之，则是从 -1 开始计数。在 chrome 开发者工具，打开`Layout`标签，然后选择`show line numbers`就能看到编号了：
 
-<img src="https://img13.360buyimg.com/imagetools/jfs/t1/197842/40/24838/21820/62c65279E06cbee38/c04cfe44556fc20e.png" width="300">
+<img src="https://img13.360buyimg.com/imagetools/jfs/t1/197842/40/24838/21820/62c65279E06cbee38/c04cfe44556fc20e.png" width="500">
 
 <img src="https://img14.360buyimg.com/imagetools/jfs/t1/11540/15/17844/13940/62c651e6E2538492d/d0a6d6bbc16e12ee.png" width="500">
 
@@ -408,7 +408,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-start.svg" width="300" />
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-start.svg" width="500" />
 
 ```css
 .item-a {
@@ -416,7 +416,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-end.svg" width="300" />
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-end.svg" width="500" />
 
 ```css
 .item-a {
@@ -424,7 +424,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-center.svg" width="300" />
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-center.svg" width="500" />
 
 ```css
 .item-a {
@@ -432,7 +432,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-stretch.svg" width="300" />
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-stretch.svg" width="500" />
 
 `align-self`同理，这里就不加示例了
 
@@ -452,7 +452,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/place-self-center-stretch.svg" width="300" />
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/place-self-center-stretch.svg" width="500" />
 
 ### `justify-items`、`align-items`和`place-items`
 
@@ -473,7 +473,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-items-start.svg" width="300" />
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-items-start.svg" width="500" />
 
 其它属性值就不做演示了，道理是一样的。`place-items`是前两者的简写形式，语法为：
 
@@ -544,10 +544,10 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 ### `grid-auto-rows`、`grid-auto-columns`
 
-其实`grid-auto-rows`、`grid-auto-columns`和`grid-template-rows`、`grid-template-columns`的作用是一样的，都是用来给 grid container 划分行列。但它们之间的最大区别就在于前者更多了一些**自动**的特性，
+其实`grid-auto-rows`、`grid-auto-columns`和`grid-template-rows`、`grid-template-columns`的作用是一样的，都是用来给 grid container 划分行列。但它们之间的最大区别就在于前者多了一些**自动**的特性，
 毕竟名字中就带着一个『auto』
 
-例如在下面示例中 grid container 有四个 grid item，每个 item 都有一个背景色，以方便查看：
+例如在下面示例中 grid container 有四个 grid item，每个 item 都设置了背景色：
 
 ```html
 <div class="container">
@@ -583,16 +583,19 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
-那默认情况下，它会渲染成这样：
+那默认情况下，它会渲染成这样。四个子元素会纵向平分 grid container 的剩余空间：
 
-<img src="https://img14.360buyimg.com/imagetools/jfs/t1/137478/13/22385/3675/62cf7d91E339f4558/c02f5d27050975b7.png" width="300" />
+<img src="https://img14.360buyimg.com/imagetools/jfs/t1/137478/13/22385/3675/62cf7d91E339f4558/c02f5d27050975b7.png" width="500" />
 
-如果用`grid-template-rows`、`grid-template-columns`划分成两行两列之后，它会渲染成：
+如果用`grid-template-rows`、`grid-template-columns`划分成两行两列，也就是总共四个 grid cell，它会渲染成这样。正好每个 grid item 占据一个 grid cell 的空间：
 
-<img src="https://img14.360buyimg.com/imagetools/jfs/t1/208681/12/24585/2641/62cfea88E91b0225c/f403b474ff147546.png" width="300" />
+<img src="https://img14.360buyimg.com/imagetools/jfs/t1/208681/12/24585/2641/62cfea88E91b0225c/f403b474ff147546.png" width="500" />
 
+如果再多加一个 grid item 呢？它会渲染成这样。想一下为什么会这样？因为多出的这一个 grid item，在高度上没有具体的尺寸约束它，所以它的高度就是『auto』，而它的宽度只能是`100px`：
 
-现在给 grid container 添加`grid-auto-rows`和`grid-auto-columns`，都是定义了两行两列，尺寸都是`100px`：
+<img src="https://img11.360buyimg.com/imagetools/jfs/t1/90548/35/31145/8649/62d51ec7E3be71d02/2890b95c3aeb39fc.png" width="500">
+
+现在来看看`grid-auto-rows`和`grid-auto-columns`的行为是怎样的，也用它们俩给 grid container 定义了两行两列，尺寸都是`100px`：
 
 ```css
 .container {
@@ -606,10 +609,26 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
-此时，重新刷新会渲染成：
+此时，重新刷新会渲染成这样。有的人就会疑惑了，为什么它只占据了四行一列的空间呢？这就是为什么它的名称里带有一个『auto』了。从它的行为可以看出来，不管是行还是列的方向，如果 grid cell 的数量不满足 grid item 数量的
+时候，它就会自动进行扩展，以满足其对更多空间数量的需求：
 
-<img src="https://img10.360buyimg.com/imagetools/jfs/t1/95388/40/29756/8497/62cf815dEa96a738b/e96001bbdaea86dc.png" width="300" />
+<img src="https://img10.360buyimg.com/imagetools/jfs/t1/95388/40/29756/8497/62cf815dEa96a738b/e96001bbdaea86dc.png" width="500" />
 
+如果你确实希望它能够在行数不够的情况下，能够去占据一下定义的列空间。就需要将`grid-auto-columns`换成`grid-template-columns`，以明确定义列的数量才可以：
+
+```css
+.container {
+  background: #eee;
+  display: grid;
+  width: 500px;
+  height: 500px;
+
+  grid-auto-rows: 100px 100px;
+  grid-template-columns: 100px 100px;
+}
+```
+
+<img src="https://img14.360buyimg.com/imagetools/jfs/t1/208681/12/24585/2641/62cfea88E91b0225c/f403b474ff147546.png" width="500" />
 
 ## 各属性关系图
 
