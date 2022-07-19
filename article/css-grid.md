@@ -630,6 +630,47 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 <img src="https://img14.360buyimg.com/imagetools/jfs/t1/208681/12/24585/2641/62cfea88E91b0225c/f403b474ff147546.png" width="500" />
 
+### `grid-auto-flow`
+
+当一个 grid container 内包含的若干 grid item 不需要有明确的对齐方式时，就可以使用`grid-auto-flow`来为它们指定一个对齐算法，以实现自动对齐。它有三个属性值：
+
+* `row`：告诉对齐算法，优先以行的方向进行填充，有必要的情况下还可以增加新行
+* `column`：告诉对齐算法，优先以列的方向进行填充，有必要的情况下还可以增加新列
+* `dense`：告诉对齐算法，尽可能的将每一块儿区域都填满。有时候尺寸比较大的 grid item 填充完之后，可能会留有一些小的空余区域。这时候，即使后面才动态的添加了一些尺寸较小的 grid item，也应该用这些较小的 grid item 去填充那些空间区域。简单来说就是尽量将空间占满
+
+在下面的 grid container 中包含五个 grid item，然后使用`grid-template-rows`和`grid-template-columns`划分为**三行两列**，接着指定`grid-auto-flow: row`告诉对齐算法优先以行的方向对齐填充：
+
+```html
+<div class="container">
+  <div class="item-a">A</div>
+  <div class="item-b">B</div>
+  <div class="item-c">C</div>
+  <div class="item-d">D</div>
+  <div class="item-e">E</div>
+</div>
+```
+
+```css
+.container {
+  background: #eee;
+  display: grid;
+  width: 500px;
+  height: 500px;
+  grid-template-rows: repeat(3, 100px);
+  grid-template-columns: repeat(2, 100px);
+  grid-auto-flow: row;
+}
+```
+
+看一下渲染效果。通过 grid item 内的字母顺序可以看到，果然是以行优先的顺序在进行对齐：
+
+<img src="https://img10.360buyimg.com/imagetools/jfs/t1/117789/20/28197/8631/62d65932E4ea1b987/ab5ccbd56bd2ec2c.png" width="500" />
+
+修改一下对齐方式`grid-auto-flow: column`，再通过字母顺序可以看到是以列优先的方式进行对齐的：
+
+<img src="https://img11.360buyimg.com/imagetools/jfs/t1/109300/6/31832/8483/62d65a32Ee336dd58/6d105fc3d00d2145.png" width="500" />
+
+
 ## 各属性关系图
 
 <img src="./css-grid.svg" width="100%" />
