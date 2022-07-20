@@ -670,6 +670,24 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 <img src="https://img11.360buyimg.com/imagetools/jfs/t1/109300/6/31832/8483/62d65a32Ee336dd58/6d105fc3d00d2145.png" width="500" />
 
+### `grid`
+
+`grid`是下列几个属性的简写形式。既然是简写形式，就可以根据需要指定其中几个或者全部属性：
+
+```
+grid-template-rows
+grid-template-columns
+grid-template-areas
+grid-auto-rows
+grid-auto-columns
+grid-auto-flow
+```
+
+`grid`属性有下列几种用法：
+
+* `none`：表示不指定任何值，它所代表的属性值都按默认值渲染
+* `<grid-template>`：和`grid-template`用法相同
+* `<grid-template-rows> / [ auto-flow && dense? ] <grid-auto-columns>?`
 
 ## 各属性关系图
 
