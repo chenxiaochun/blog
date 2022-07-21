@@ -64,9 +64,9 @@ grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。�
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-area.svg" width="500">
 
-## `grid`属性集合
+## `grid`属性集合介绍
 
-### `display`
+### ➡️ `display`
 
 * `grid`：生成一个块级元素的 grid container
 * `inline-grid`：生成一个内联级元素的 grid container
@@ -85,7 +85,7 @@ grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。�
 
 <img src="https://img11.360buyimg.com/imagetools/jfs/t1/78723/7/20056/72460/62c6497dE5761f263/3df5529107f082b2.png" width="600">
 
-### `grid-template-columns`和`grid-template-rows`
+### ➡️ `grid-template-columns`和`grid-template-rows`
 
 这两个属性用于将 grid container 划分成若干格子，每个格子被称为 grid item。例如将一个宽度和高度都等于`500px`的 grid container 都划分成`4*4`的格子
 
@@ -162,7 +162,7 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 1fr = (grid 容器尺寸 - 50px) / 3
 ```
 
-### `grid-row-start`、`grid-column-start`、`grid-row-end`、`grid-column-end`
+### ➡️ `grid-row-start`、`grid-column-start`、`grid-row-end`、`grid-column-end`
 
 这几个选择器都只能用于 grid item。用来定义 grid item 在一个 grid container 中的开始行、开始列、结束行和结束列的位置
 
@@ -231,7 +231,7 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 }
 ```
 
-### `grid-area`和`grid-template-areas`
+### ➡️ `grid-area`和`grid-template-areas`
 
 `grid-area`除了可以作为`grid-row`、`grid-column`两兄弟的简写之外。还可以用来给 grid item 指定一个名称（注意：这里说的是 grid item，并非 grid line）
 
@@ -307,7 +307,7 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 
 <img src="https://img14.360buyimg.com/imagetools/jfs/t1/120040/30/24550/15068/62cce583E5f7ece2f/2947726feb967561.png" />
 
-### `grid-template`
+### ➡️ `grid-template`
 
 此属性可以作为`grid-template-rows`、`grid-template-columns`两者的简写形式。例如：
 
@@ -367,7 +367,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 应该有人注意到了，斜杠后面的`1fr 1fr 1fr 1fr`是完全相同的，那是不是可以写成`repeat(4, 1fr)`呢？经过我的测试，答案是不可以的。不知道为啥不支持！
 
-### `grid-row-gap`、`grid-column-gap`和`row-gap`、`column-gap`和`grid-gap`、`gap`
+### ➡️ `grid-row-gap`、`grid-column-gap`和`row-gap`、`column-gap`和`grid-gap`、`gap`
 
 这几个属性用来设置 grid line 尺寸，其实就是用来设置行和列之间的间距。其中带有`grid-`的前两者是旧的使用方式，现在标准的使用方式应该是后两者（我咋觉得前两者的命名更统一规范呢，也可能是标准组将来打算把它们用在别的地方）
 
@@ -389,7 +389,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/dddgrid-gap.svg" width="400" />
 
-### `justify-self`、`align-self`和`place-self`
+### ➡️ `justify-self`、`align-self`和`place-self`
 
 这两者都是用来控制 grid item 在 grid cell 中的对齐方向。`justify-self`用来控制水平对齐方向，`align-self`用来控制垂直对齐方向。都是有四个属性值：
 
@@ -454,9 +454,9 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/place-self-center-stretch.svg" width="500" />
 
-### `justify-items`、`align-items`和`place-items`
+### ➡️ `justify-items`、`align-items`和`place-items`
 
-这几个属性只能用于 grid container 元素，用来控制所有的 grid item 在 grid cell 里的对齐方向。前者用来控制水平方向对齐，后者用来控制垂直方向对齐。也都是有四个属性值：
+这几个属性用于 grid container 元素，用来控制所有的 grid item 在 grid cell 里的对齐方向。前者用来控制水平方向对齐，后者用来控制垂直方向对齐。也都是有四个属性值：
 
 ```css
 .container {
@@ -465,25 +465,69 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
-例如：
+例如下面示例中，grid container 被分为了三行三列，包含五个 grid item：
+
+```html
+<div class="container">
+  <div class="item-a">A</div>
+  <div class="item-b">B</div>
+  <div class="item-c">C</div>
+  <div class="item-d">D</div>
+  <div class="item-e">E</div>
+</div>
+```
 
 ```css
 .container {
-  justify-items: start;
+  background: #eee;
+  display: grid;
+  width: 500px;
+  height: 500px;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
 }
 ```
 
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-items-start.svg" width="500" />
+所有 grid item 的宽度都设置为`100px`。这样 grid item 的宽度才会小于 grid cell 的宽度（这里为`1fr=500/3`）。这样才能使用`justify-items`控制其水平对齐方向。例如可以都使其水平居中对齐：
 
-其它属性值就不做演示了，道理是一样的。`place-items`是前两者的简写形式，语法为：
+```css
+.container div {
+  width: 100px;
+}
 
+.item-a {
+  background: orange;
+}
+
+.item-b {
+  background: skyblue;
+}
+
+.item-c {
+  background: purple;
+}
+
+.item-d {
+  background: yellow;
+}
+
+.item-e {
+  background: green;
+}
 ```
+
+<img src="https://img10.360buyimg.com/imagetools/jfs/t1/50378/10/20001/9423/62d8fa39Eee680ac0/db6953f709042866.png" width="500" />
+
+其它属性值的道理是一样的。而`place-items`是`justify-items`和`align-items`的简写形式，具体语法为：
+
+```css
 .container{
   place-items: <align-items> / <justify-items>
 }
 ```
 
-### `justify-content`、`align-content`和`place-content`
+### ➡️ `justify-content`、`align-content`和`place-content`
 
 有时候，我们用`grid-template-rows`和`grid-template-columns`在对 grid container 划分时，用的可能都是`px`等绝对单位。这就可能使得所有行或者列加起来的尺寸还是小于 grid container 的整体尺寸，还留有一定的富余空间
 
@@ -542,7 +586,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 <img src="https://img10.360buyimg.com/imagetools/jfs/t1/105846/31/31167/13205/62ce8cbbE437db7c8/373836d989073cfb.png" width="500" />
 
-### `grid-auto-rows`、`grid-auto-columns`
+### ➡️ `grid-auto-rows`、`grid-auto-columns`
 
 其实`grid-auto-rows`、`grid-auto-columns`和`grid-template-rows`、`grid-template-columns`的作用是一样的，都是用来给 grid container 划分行列。但它们之间的最大区别就在于前者多了一些**自动**的特性，
 毕竟名字中就带着一个『auto』
@@ -630,7 +674,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 <img src="https://img14.360buyimg.com/imagetools/jfs/t1/208681/12/24585/2641/62cfea88E91b0225c/f403b474ff147546.png" width="500" />
 
-### `grid-auto-flow`
+### ➡️ `grid-auto-flow`
 
 当一个 grid container 内包含的若干 grid item 不需要有明确的对齐方式时，就可以使用`grid-auto-flow`来为它们指定一个对齐算法，以实现自动对齐。它有三个属性值：
 
@@ -670,7 +714,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 <img src="https://img11.360buyimg.com/imagetools/jfs/t1/109300/6/31832/8483/62d65a32Ee336dd58/6d105fc3d00d2145.png" width="500" />
 
-### `grid`
+### ➡️ `grid`
 
 `grid`是下列几个属性的简写形式。既然是简写形式，就可以根据需要指定其中几个或者全部属性：
 
@@ -683,11 +727,19 @@ grid-auto-columns
 grid-auto-flow
 ```
 
-`grid`属性有下列几种用法：
+`grid`属性可以有下列几种用法：
 
-* `none`：表示不指定任何值，它所代表的属性值都按默认值渲染
-* `<grid-template>`：和`grid-template`用法相同
-* `<grid-template-rows> / [ auto-flow && dense? ] <grid-auto-columns>?`
+1. `none`
+
+设置为`none`表示不指定任何值，它所代表的属性值都按默认值渲染
+
+2. `<grid-template>`
+
+与`grid-template`用法相同，就不再赘述了
+
+3. `<grid-template-rows> / [ auto-flow && dense? ] <grid-auto-columns>?`
+
+4. `[ auto-flow && dense? ] <grid-auto-rows>? / <grid-template-columns>`
 
 ## 各属性关系图
 
