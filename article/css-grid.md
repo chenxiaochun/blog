@@ -1,12 +1,12 @@
-css grid，可以简称为 grid。是一种完全和以前所有其它的，都截然不同的 web 布局方式
+css grid，也可以简称为 grid 布局。是一种完全和以前所有其它的，都截然不同的 web 布局方式
 
-对于界面布局，我们曾经都使用过`table`、`float`、`position`定位以及`inline-block`，这些特性用在布局上，其实本质上都是一种 hack，并且它们也不具备我们常用的一些功能
+对于界面布局，我们曾经都使用过`table`、`float`、`position`定位以及`inline-block`。这些属性用在布局上，其实本质上都是一种投机取巧的 hack。因此，它们本质上并不是用来做页面布局的，只是限制于当时能够使用的属性，不得已让它们来担负了此重任
 
-提到 css grid，你可能就会想到 [flex](https://css-tricks.com/quick-whats-the-difference-between-flexbox-and-grid/)。但我觉得前者更倾向于**布局**，后者更倾向于**对齐**
+提到 css grid，可能就会想到 [flex](https://css-tricks.com/quick-whats-the-difference-between-flexbox-and-grid/)。但我觉得前者更倾向于**布局**，后者更倾向于**对齐**
 
 就像房屋的布局是一个不规则的图形，如果用上面提到的传统方式来实现，并且还能要根据整体面积自适应（对于我们来说，就是页面尺寸的自适应），将会是一件很麻烦的事情。而换成 css grid 来实现就会非常简单（为什么简单？看完下面的详细介绍就清楚了）
 
-而一旦整体布局确定之后，房间里的家具到底是左对齐，还是右对齐，来使用 flex 实现就会很简单了
+而一旦整体布局确定之后，房间里的家具到底是左对齐，还是右对齐，来使用 flex 实现就会很简单了（并不是说都使用 grid 布局是做不到的，这里是从这些 css 你属性设计的语义、功能和初衷来进行考虑的）
 
 <img src="https://img14.360buyimg.com/imagetools/jfs/t1/177857/38/27131/43095/62ccdcacEf9821e4e/e2dcbeec23b5bb42.jpg" width="600" />
 
@@ -18,7 +18,7 @@ css grid，可以简称为 grid。是一种完全和以前所有其它的，都�
 
 grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。之前一直觉得 flex 的概念已经很多了。但是，和 grid 比起来，还是小巫见大巫了。所以需要提前明确一下这些概念，以免后面搞不清楚
 
-而且，即使你完整学完这篇教程之后，如果没有深刻的实践。后面想用的时候，依然会被它复杂的属性关系搞糊涂。因此，我在最后面画了一张整个 grid 布局属性关系图，以后想不起来它们之间关系的时候，可以随时打开此图来查看
+而且，即使你完整学完这篇教程之后，如果没有深刻的实践。后面想用的时候，依然会被它复杂的属性关系搞糊涂。因此，我在最后面附了一张**整个 grid 布局属性关系图**，此图也是我在边学习 gird 的时候，边整理出来的。以后想不起来它们之间关系的时候，可以随时打开此图来查阅
 
 ### grid container
 
@@ -47,21 +47,21 @@ grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。�
 
 ### grid cell
 
-指的是将 grid container 划分行列之后的虚拟单元格，不是页面中真实的 dom 元素。而 grid item 一定是真实的 dom 元素，这也是它们两者最大的区别之一，不要弄混淆了
+指的是将 grid container 划分行列之后的虚拟单元格。例如下面的 grid container 被划分为了两行三列。因此，它就拥有六个 grid cell
 
-比如，下面的 grid container 被划分为了两行三列。那黄色单元格作为一个真实的 dom 元素，就是 grid item，其它没有存在真实 dom 元素的单元格就是 grid cell
+而只有黄色的单元格为真实的 dom 元素，因此，它只拥有一个 grid item。它们俩之间的区别一定要弄清楚，否则，后面在应用很多属性时也会糊涂
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-cell.svg" width="500" />
 
 ### grid line
 
-指的是 grid cell 之间水平或者垂直方向的分隔线
+指的是 grid cell 之间水平或者垂直方向的分隔线。这个很好理解，不用多解释
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-line.svg" width="500">
 
 ### grid track
 
-指的就是 grid container 里的行或者列
+指的就是 grid container 里由 grid cell 组成的行或者列
 
 <img src="https://css-tricks.com/wp-content/uploads/2021/08/terms-grid-track.svg" width="500">
 
@@ -98,7 +98,7 @@ grid 的属性非常多，有的只能用于 grid container，而有的只能用
 
 ### ➡️ `grid-template-columns`和`grid-template-rows`
 
-这两个属性用于将 grid container 划分成若干格子，这些格子就是 grid cell。例如下面是将一个宽度和高度都是`500px`的 grid container 都划分成`4*4`的格子
+这两个属性用于将 grid container 划分成若干格子，这些格子就是 grid cell。例如下面是将一个宽度和高度都是`500px`的 grid container 划分成`4*4`的格子
 
 ```css
 .container {
@@ -110,11 +110,11 @@ grid 的属性非常多，有的只能用于 grid container，而有的只能用
   grid-template-rows: 1fr 1fr 1fr 1fr;
 }
 ```
-点击打开 grid container 上的 grid 开关，就会看到虚线划分的 grid cell：
+正常情况下，只会在页面上看到一个空白元素。只有打开 chrome 开发者工具，然后审查该 grid container，再点击打开 grid container 上的 grid 开关，就会看到虚线划分的 grid cell 了：
 
 <img src="https://img10.360buyimg.com/imagetools/jfs/t1/92653/6/29512/10407/62c64e20E5afe9bf3/dfe283f32774fc35.png" width="400">
 
-在这里，我们的 grid cell 的尺寸单位用的`fr`（当然也可以其它单位，例如：换成长度、百分比等），`fr`是在 grid 布局中添加的一个新单位，用于表示 grid container 的剩余空间大小。在此示例中因为将空间分成了 4 等份，所以`1fr`就等于 grid container 的四分之一大小。这个在后面也会详细讲
+在这里，我们定义 grid cell 尺寸用的是`fr`单位（当然也可以是其它单位，例如：换成长度、百分比等），`fr`是在 grid 布局中添加的一个新单位，用于表示 grid container 的剩余空间大小。在此示例中因为将空间分成了 4 等份，所以`1fr`就等于 grid container 的四分之一大小。这个在后面也会详细讲
 
 grid cell 之间的虚线就是 grid line，它们默认都有自己的**整数编号**。如果是从开始行（列）到结束行（列），则是从正 1 开始计数。反之，则是从 -1 开始计数。在 chrome 开发者工具，打开`Layout`标签，在下拉框中选择`show line numbers`就能看到编号：
 
@@ -157,9 +157,11 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 
 注意语法为`repeat(4, 1fr [row])`，而不是`repeat(4, [row] 1fr)`，后者是无效的
 
-上面一直说`fr`指的是 grid container 的**剩余空间**。其实剩余空间指的就是 grid container 减去非弹性元素空间之后的空间
+### ➡️ 剩余空间
 
-来看下面示例，将 grid container 分成了四列：
+上面一直说`fr`单位占用的是 grid container 剩余空间。所谓剩余空间指的就是 grid container 减去非弹性元素空间之后的空间
+
+看下面示例中，将 grid container 分成了四列：
 
 ```css
 .container {
@@ -175,9 +177,9 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 
 ### ➡️ `grid-row-start`、`grid-column-start`、`grid-row-end`、`grid-column-end`
 
-这几个选择器都只能用于 grid item。用来定义 grid item 在一个 grid container 中的开始行、开始列、结束行和结束列的位置
+这几个属性都只能用于 grid item。用来定义 grid item 在一个 grid container 中的开始行、开始列、结束行和结束列的位置
 
-看下面的示例，在 grid container 中有一个子元素。grid container 被划分为了四行四列。
+在下面示例中， grid container 只包含一个 grid item，并且被划分为了四行四列：
 
 ```html
 <div class="container">
@@ -217,7 +219,7 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 
 <img src="https://img12.360buyimg.com/imagetools/jfs/t1/83641/33/20415/11286/62c6db4eEb27f272a/ac291c4fcd5b6d8f.png" width="500">
 
-上面四兄弟可以用`grid-row`和`grid-column`进行简写：
+上面四兄弟分别可以用`grid-row`和`grid-column`进行简写：
 
 ```css
 .item-a{
@@ -234,7 +236,7 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 }
 ```
 
-然后，这两条 css 属性又可以使用`grid-area`简写为一条，只是顺序必须要遵循：开始行/开始列/结束行/结束列
+然后，这`grid-row`和`grid-column`又可以使用`grid-area`进行简写，只是顺序必须要遵循：开始行/开始列/结束行/结束列
 
 ```css
 .item-a{
