@@ -55,19 +55,21 @@ grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。�
 
 ### grid line
 
-指的是 grid cell 之间水平或者垂直方向的分隔线。这个很好理解，不用多解释
+指的是 grid cell 之间水平或者垂直方向的分隔线，也就是下图中的黄线：
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-line.svg" width="500">
 
 ### grid track
 
-指的就是 grid container 里由 grid cell 组成的行或者列
+`track`有『轨道』的意思。所以，它指的就是 grid container 里由 grid cell 组成的行或者列：
+
+> 我个人觉得，这个完全可以称为 grid area。细分出来这样一个概念，个人觉得没有太大意义
 
 <img src="https://css-tricks.com/wp-content/uploads/2021/08/terms-grid-track.svg" width="500">
 
 ### grid area
 
-通过名称也能联想出来，就是由若干 grid cell 组成的一个连续区域。因此，我觉得 grid track 也属于它的子集
+指的就是由若干 grid cell 组成的一个连续区域：
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-area.svg" width="500">
 
@@ -77,7 +79,7 @@ grid 的属性非常多，有的只能用于 grid container，而有的只能用
 
 ### ➡️ `display`
 
-此属性有两个值：
+想要使用 grid 布局，就要先用`display`来定义一个 grid container。此属性新增了两个值：
 
 * `grid`：生成一个块级元素的 grid container
 * `inline-grid`：生成一个内联级元素的 grid container
@@ -740,15 +742,15 @@ grid-auto-columns
 grid-auto-flow
 ```
 
-`grid`属性可以有下列几种用法：
+`grid`属性有以下几种用法：
 
 1. `none`
 
-设置为`none`表示不指定任何值，它所代表的属性值都按默认值渲染
+设置为`none`表示不做任何特殊指定，让它代表的所有属性都按默认值渲染
 
 2. `<grid-template>`
 
-与`grid-template`用法相同，就不再赘述了
+设置`grid-template`的属性值，用法与其完全相同
 
 3. `<grid-template-rows> / [ auto-flow && dense? ] <grid-auto-columns>?`
 
