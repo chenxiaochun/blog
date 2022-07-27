@@ -20,7 +20,7 @@ grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。�
 
 而且，即使你完整学完这篇教程之后，如果没有深刻的实践。后面想用的时候，依然会被它复杂的属性关系搞糊涂。因此，我在最后面附了一张**整个 grid 布局属性关系图**，此图也是我在边学习 gird 的时候，边整理出来的。以后想不起来它们之间关系的时候，可以随时打开此图来查阅
 
-### grid container
+### ➡ grid container
 
 一个添加了`display: grid`的元素就被称为 grid container，例如下面`class="container"`的元素
 
@@ -31,7 +31,7 @@ grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。�
   <div class="item item-3"></div>
 </div>
 ```
-### grid item
+### ➡ grid item
 
 一个 grid container 下面的所有**直接子元素**都被称为 grid item。在下面示例中指的就是所有`class="item"`的元素，但是不包括`class="sub-item"`元素。因为它并不是 grid container 的直接子元素
 
@@ -45,7 +45,7 @@ grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。�
 </div>
 ```
 
-### grid cell
+### ➡ grid cell
 
 指的是将 grid container 划分行列之后的虚拟单元格。例如下面的 grid container 被划分为了两行三列。因此，它就拥有六个 grid cell
 
@@ -53,13 +53,13 @@ grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。�
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-cell.svg" width="500" />
 
-### grid line
+### ➡ grid line
 
 指的是 grid cell 之间水平或者垂直方向的分隔线，也就是下图中的黄线：
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-line.svg" width="500">
 
-### grid track
+### ➡️ grid track
 
 `track`有『轨道』的意思。所以，它指的就是 grid container 里由 grid cell 组成的行或者列：
 
@@ -67,7 +67,7 @@ grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。�
 
 <img src="https://css-tricks.com/wp-content/uploads/2021/08/terms-grid-track.svg" width="500">
 
-### grid area
+### ➡️ grid area
 
 指的就是由若干 grid cell 组成的一个连续区域：
 
@@ -79,7 +79,7 @@ grid 的属性非常多，有的只能用于 grid container，而有的只能用
 
 ### ➡️ `display`
 
-想要使用 grid 布局，就要先用`display`来定义一个 grid container。此属性新增了两个值：
+`display`属性用来定义一个 grid container，这样才能使用 grid 布局。此属性新增了两个值：
 
 * `grid`：生成一个块级元素的 grid container
 * `inline-grid`：生成一个内联级元素的 grid container
@@ -94,13 +94,13 @@ grid 的属性非常多，有的只能用于 grid container，而有的只能用
 
 <img src="https://img13.360buyimg.com/imagetools/jfs/t1/98296/2/29772/4163/62c64819Edade5d5c/3d28134a8d2fea3e.png" width="400" />
 
-打开此开关，再点击右侧的`layout`标签页，也有若干选项。通过它们，可以查看关于 grid 布局的更多信息，具体如何使用后面会详细介绍，先知道有这样一个功能就行：
+打开此开关，再点击右侧的`layout`标签页，会发现里面有若干选项。通过它们，可以查看关于 grid 布局的更多信息，具体如何使用后面会详细介绍，先知道有这样一个功能就行：
 
 <img src="https://img11.360buyimg.com/imagetools/jfs/t1/78723/7/20056/72460/62c6497dE5761f263/3df5529107f082b2.png" width="600">
 
 ### ➡️ `grid-template-columns`和`grid-template-rows`
 
-这两个属性用于将 grid container 划分成若干格子，这些格子就是 grid cell。例如下面是将一个宽度和高度都是`500px`的 grid container 划分成`4*4`的格子
+有了 grid container，就可以使用这两个属性将其划分成若干格子，这些格子就是 grid cell。例如下面就是将一个宽度和高度都是`500px`的 grid container 划分成`4*4`的格子
 
 ```css
 .container {
@@ -112,19 +112,20 @@ grid 的属性非常多，有的只能用于 grid container，而有的只能用
   grid-template-rows: 1fr 1fr 1fr 1fr;
 }
 ```
-正常情况下，只会在页面上看到一个空白元素。只有打开 chrome 开发者工具，然后审查该 grid container，再点击打开 grid container 上的 grid 开关，就会看到虚线划分的 grid cell 了：
+
+正常情况下，你只会在页面上看到一个空白元素。只有打开 chrome 开发者工具，然后审查该 grid container，再点击打开 grid container 上的 grid 开关，就会看到虚线划分的 grid cell 了：
 
 <img src="https://img10.360buyimg.com/imagetools/jfs/t1/92653/6/29512/10407/62c64e20E5afe9bf3/dfe283f32774fc35.png" width="400">
 
-在这里，我们定义 grid cell 尺寸用的是`fr`单位（当然也可以是其它单位，例如：换成长度、百分比等），`fr`是在 grid 布局中添加的一个新单位，用于表示 grid container 的剩余空间大小。在此示例中因为将空间分成了 4 等份，所以`1fr`就等于 grid container 的四分之一大小。这个在后面也会详细讲
+在这里，我们定义 grid cell 尺寸用的是`fr`单位（当然也可以是其它单位，例如：换成长度、百分比等），`fr`是在 grid 布局中添加的一个新单位，用于表示 grid container 的**剩余空间**尺寸。在此示例中因为将空间分成了`4*4`等份，所以`1fr`就等于 grid container 的四分之一大小，这个在后面也会详细讲
 
-grid cell 之间的虚线就是 grid line，它们默认都有自己的**整数编号**。如果是从开始行（列）到结束行（列），则是从正 1 开始计数。反之，则是从 -1 开始计数。在 chrome 开发者工具，打开`Layout`标签，在下拉框中选择`show line numbers`就能看到编号：
+grid cell 之间的虚线就是 grid line，它们默认都有自己的**整数编号**。如果是从开始行到结束行（或者是开始列到结束列），则是从正 1 开始计数。反之，则是从 -1 开始计数。在 chrome 开发者工具，打开`Layout`标签，在下拉框中选择`show line numbers`就能看到编号：
 
-<img src="https://img13.360buyimg.com/imagetools/jfs/t1/197842/40/24838/21820/62c65279E06cbee38/c04cfe44556fc20e.png" width="500">
+<img src="https://img13.360buyimg.com/imagetools/jfs/t1/197842/40/24838/21820/62c65279E06cbee38/c04cfe44556fc20e.png" width="500" />
 
-<img src="https://img14.360buyimg.com/imagetools/jfs/t1/11540/15/17844/13940/62c651e6E2538492d/d0a6d6bbc16e12ee.png" width="500">
+<img src="https://img14.360buyimg.com/imagetools/jfs/t1/11540/15/17844/13940/62c651e6E2538492d/d0a6d6bbc16e12ee.png" width="500" />
 
-grid line 除了有编号，还可以给它指定一个自定义名称，添加的语法就是用中括号将名称括起来。如下所示：
+grid line 除了有编号，还可以给它指定一个自定义名称，添加的语法就是用**中括号**将名称括起来。如下所示：
 
 ```css
 .container {
@@ -213,8 +214,8 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 ```css
 .item-a {
   grid-row-start: 2;
-  grid-column-start: 2;
   grid-row-end: 3;
+  grid-column-start: 2;
   grid-column-end: 3;
 }
 ```
@@ -238,7 +239,7 @@ grid-template-rows: [row1] 1fr [row2 row1-end] 1fr [row3] 1fr [row4] 1fr;
 }
 ```
 
-然后，这`grid-row`和`grid-column`又可以使用`grid-area`进行简写，只是顺序必须要遵循：开始行/开始列/结束行/结束列
+然后`grid-row`和`grid-column`又可以使用`grid-area`进行简写，只是顺序必须要遵循：开始行/开始列/结束行/结束列
 
 ```css
 .item-a{
@@ -406,7 +407,12 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 ### ➡️ `justify-self`、`align-self`和`place-self`
 
-这两者都是用来控制 grid item 在 grid cell 中的对齐方向。`justify-self`用来控制水平对齐方向，`align-self`用来控制垂直对齐方向。都是有四个属性值：
+这几个属性都只能用在 grid item 上，是用来控制 grid item 在 grid cell 中的对齐方向：
+
+* `justify-self`用来控制 grid item 在 grid cell 中水平对齐方向
+* `align-self`用来控制 grid item 在 grid cell 中的垂直对齐方向
+
+它们都有四个属性值：
 
 ```css
 .item {
@@ -415,15 +421,53 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
-分别看一下每个属性值的效果：
+在下面示例中，grid container 中的五个 grid item 宽度都设置成了`100px`。所以，grid item 的宽度是比 grid cell 要小。这时候，就可以控制 grid item 在 grid cell 中的水平对齐方向了。例如，给`.item-a`添加`justify-self: center`使其水平居中：
 
-```css
-.item-a {
-  justify-self: start;
-}
+```html
+<div class="container">
+  <div class="item-a">A</div>
+  <div class="item-b">B</div>
+  <div class="item-c">C</div>
+  <div class="item-d">D</div>
+  <div class="item-e">E</div>
+</div>
 ```
 
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-start.svg" width="500" />
+```css
+.container{
+  background: #eee;
+  display: grid;
+  width: 500px;
+  height: 500px;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.container div {
+  width: 100px;
+}
+
+.item-a {
+  background: orange;
+  justify-self: center;
+}
+
+.item-b {
+  background: skyblue;
+}
+
+.item-c {
+  background: purple;
+}
+
+.item-d {
+  background: yellow;
+}
+
+.item-e {
+  background: green;
+}
+```
 
 ```css
 .item-a {
@@ -431,15 +475,9 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-end.svg" width="500" />
+<img src="https://img13.360buyimg.com/imagetools/jfs/t1/207131/27/24856/12165/62e1098bEa4d8aa3c/309942a35701ee96.png" width="500" />
 
-```css
-.item-a {
-  justify-self: center;
-}
-```
-
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-center.svg" width="500" />
+其它属性值的功能类似，具体可以看下面的示例图：
 
 ```css
 .item-a {
