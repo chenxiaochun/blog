@@ -16,9 +16,9 @@ css grid，也可以简称为 grid 布局。是一种完全和以前所有其它
 
 ## 重要术语解释
 
-grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。之前一直觉得 flex 的概念已经很多了。但是，和 grid 比起来，还是小巫见大巫了。所以需要提前明确一下这些概念，以免后面搞不清楚
+grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。之前一直觉得 flex 的概念已经很多了。但是，和 grid 比起来，还是小巫见大巫了。所以需要提前明确一下这些概念，以免后面搞不清楚。在全文的描述中，我都是用的英文名称，没有使用中文名称。是因为我觉得使用英文单词可以准确表达它的含义，强行翻译成中文反而会使得有些概念比较拗口
 
-而且，即使你完整学完这篇教程之后，如果没有深刻的实践。后面想用的时候，依然会被它复杂的属性关系搞糊涂。因此，我在最后面附了一张**整个 grid 布局属性关系图**，此图也是我在边学习 gird 的时候，边整理出来的。以后想不起来它们之间关系的时候，可以随时打开此图来查阅
+因为概念和属性比较多，即使你完整学完这篇教程之后，如果没有深刻的实践。后面想用的时候，依然会被它复杂的属性关系搞糊涂。因此，我在最后面附了一张**整个 grid 布局属性关系图**，此图也是我在边学习，边整理出来的。只要能把这张图『印』到大脑里，至于如何使用的细节，完全可以再查阅文档
 
 ### ➡ grid container
 
@@ -31,9 +31,16 @@ grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。�
   <div class="item item-3"></div>
 </div>
 ```
+
+```css
+.container{
+  display: grid;
+}
+```
+
 ### ➡ grid item
 
-一个 grid container 下面的所有**直接子元素**都被称为 grid item。在下面示例中指的就是所有`class="item"`的元素，但是不包括`class="sub-item"`元素。因为它并不是 grid container 的直接子元素
+一个 grid container 下面的所有的**直接子元素**都被称为 grid item。在下面示例中指的就是所有`class="item"`的元素，但是不包括`class="sub-item"`元素。因为它并不是 grid container 的直接子元素
 
 ```html
 <div class="container">
@@ -49,7 +56,7 @@ grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。�
 
 指的是将 grid container 划分行列之后的虚拟单元格。例如下面的 grid container 被划分为了两行三列。因此，它就拥有六个 grid cell
 
-而只有黄色的单元格为真实的 dom 元素，因此，它只拥有一个 grid item。它们俩之间的区别一定要弄清楚，否则，后面在应用很多属性时也会糊涂
+而只有黄色的单元格为真实的 dom 元素，因此，它只拥有一个 grid item。这也是 grid item 和 grid cell 的最大区别之一，就是 grid item 一定是一个真实的 dom 元素
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-cell.svg" width="500" />
 
@@ -59,6 +66,12 @@ grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。�
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-line.svg" width="500">
 
+### ➡️ grid area
+
+指的就是由若干 grid cell 组成的一个连续区域：
+
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-area.svg" width="500">
+
 ### ➡️ grid track
 
 `track`有『轨道』的意思。所以，它指的就是 grid container 里由 grid cell 组成的行或者列：
@@ -67,11 +80,7 @@ grid 的概念和术语之复杂，在整个 css 体系中都是很少见的。�
 
 <img src="https://css-tricks.com/wp-content/uploads/2021/08/terms-grid-track.svg" width="500">
 
-### ➡️ grid area
-
-指的就是由若干 grid cell 组成的一个连续区域：
-
-<img src="https://css-tricks.com/wp-content/uploads/2018/11/terms-grid-area.svg" width="500">
+上面就是 grid 布局里的所有基础概念。下面来看具体的属性介绍
 
 ## `grid`属性集合介绍
 
@@ -79,7 +88,7 @@ grid 的属性非常多，有的只能用于 grid container，而有的只能用
 
 ### ➡️ `display`
 
-`display`属性用来定义一个 grid container，这样才能使用 grid 布局。此属性新增了两个值：
+`display`属性上新增了两个属性值，用于定义一个 grid container：
 
 * `grid`：生成一个块级元素的 grid container
 * `inline-grid`：生成一个内联级元素的 grid container
@@ -100,7 +109,7 @@ grid 的属性非常多，有的只能用于 grid container，而有的只能用
 
 ### ➡️ `grid-template-columns`和`grid-template-rows`
 
-有了 grid container，就可以使用这两个属性将其划分成若干格子，这些格子就是 grid cell。例如下面就是将一个宽度和高度都是`500px`的 grid container 划分成`4*4`的格子
+有了 grid container，就可以使用这两个属性将其划分成若干单元格，这些单元格就是 grid cell。例如下面就是将一个宽度和高度都是`500px`的 grid container 划分成了`4*4`个数的单元格：
 
 ```css
 .container {
@@ -113,7 +122,7 @@ grid 的属性非常多，有的只能用于 grid container，而有的只能用
 }
 ```
 
-正常情况下，你只会在页面上看到一个空白元素。只有打开 chrome 开发者工具，然后审查该 grid container，再点击打开 grid container 上的 grid 开关，就会看到虚线划分的 grid cell 了：
+正常情况下，你只会在页面上看到一个空白元素。只有打开 chrome 开发者工具，然后审查该 grid container，再点击打开 grid container 上的 grid 开关，就能看到虚线划分的 grid cell 了：
 
 <img src="https://img10.360buyimg.com/imagetools/jfs/t1/92653/6/29512/10407/62c64e20E5afe9bf3/dfe283f32774fc35.png" width="400">
 
@@ -121,7 +130,7 @@ grid 的属性非常多，有的只能用于 grid container，而有的只能用
 
 grid cell 之间的虚线就是 grid line，它们默认都有自己的**整数编号**。如果是从开始行到结束行（或者是开始列到结束列），则是从正 1 开始计数。反之，则是从 -1 开始计数。在 chrome 开发者工具，打开`Layout`标签，在下拉框中选择`show line numbers`就能看到编号：
 
-<img src="https://img13.360buyimg.com/imagetools/jfs/t1/197842/40/24838/21820/62c65279E06cbee38/c04cfe44556fc20e.png" width="500" />
+<img src="https://img13.360buyimg.com/imagetools/jfs/t1/197842/40/24838/21820/62c65279E06cbee38/c04cfe44556fc20e.png" width="350" />
 
 <img src="https://img14.360buyimg.com/imagetools/jfs/t1/11540/15/17844/13940/62c651e6E2538492d/d0a6d6bbc16e12ee.png" width="500" />
 
