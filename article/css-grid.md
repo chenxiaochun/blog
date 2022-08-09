@@ -394,7 +394,9 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 ### ➡️ `grid-row-gap`、`grid-column-gap`和`row-gap`、`column-gap`和`grid-gap`、`gap`
 
-这几个属性用来设置 grid line 尺寸，其实就是用来设置行和列之间的间距。其中带有`grid-`的前两者是旧的使用方式，现在标准的使用方式应该是后两者（我咋觉得前两者的命名更统一规范呢，也可能是标准组将来打算把它们用在别的地方）
+这几个属性用来设置 grid line 尺寸，其实就是用来设置行和列之间的间距。其中带有`grid-`前缀的属性是旧的使用方式，现在标准的使用方式应该是不带有此前缀的属性
+
+> 我咋觉得带有`grid-`前缀的命名更统一规范呢，也可能是标准组将来打算把它们用在别的地方
 
 ```css
 .container{
@@ -407,8 +409,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 ```css
 .container{
-  grid-gap: 15px 10px; /* 旧的使用方式 */
-  gap: 15px 10px; /* 标准使用方式*/
+  gap: 15px 10px;
 }
 ```
 
@@ -416,7 +417,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 ### ➡️ `justify-self`、`align-self`和`place-self`
 
-这几个属性都只能用在 grid item 上，是用来控制 grid item 在 grid cell 中的对齐方向：
+这几个属性都只能用在 grid item 上，用来控制 grid item 在 grid cell 中的对齐方向：
 
 * `justify-self`用来控制 grid item 在 grid cell 中水平对齐方向
 * `align-self`用来控制 grid item 在 grid cell 中的垂直对齐方向
@@ -486,7 +487,23 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 <img src="https://img13.360buyimg.com/imagetools/jfs/t1/207131/27/24856/12165/62e1098bEa4d8aa3c/309942a35701ee96.png" width="500" />
 
-其它属性值的功能类似，具体可以看下面的示例图：
+其它几个属性值的功能也都很好理解，具体效果可以看看下面的示例图：
+
+```css
+.item-a {
+  justify-self: start;
+}
+```
+
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-start.svg" width="500" />
+
+```css
+.item-a {
+  justify-self: end;
+}
+```
+
+<img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-end.svg" width="500" />
 
 ```css
 .item-a {
@@ -496,9 +513,9 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 <img src="https://css-tricks.com/wp-content/uploads/2018/11/justify-self-stretch.svg" width="500" />
 
-`align-self`同理，这里就不加示例了
+`align-self`属性控制的是 grid item 在 grid cell 中的垂直方向的对齐方式，属性值也完全和`justify-self`完全一样
 
-`place-self`是这两者的简写形式，语法为：
+而`place-self`是这个属性的简写形式，语法为：
 
 ```
 .item{
@@ -506,7 +523,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
-例如：
+例如下面的示例表示此 grid item 在 grid cell 中垂直方向居中对齐，水平方向拉伸对齐：
 
 ```css
 .item-a {
@@ -589,11 +606,13 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
+发现没有？这几个属性的功能和上一小节几个属性功能是完全一样的。只不过作用的元素不一样而已
+
 ### ➡️ `justify-content`、`align-content`和`place-content`
 
 有时候，我们用`grid-template-rows`和`grid-template-columns`在对 grid container 划分时，用的可能都是`px`等绝对单位。这就可能使得所有行或者列加起来的尺寸还是小于 grid container 的整体尺寸，还留有一定的富余空间
 
-例如下面示例中：
+还是拿示例来说：
 
 * grid container 的宽度和高度都是`500px`
 * 使用`grid-template-rows: repeat(3, 1fr);`定义了 3 行，因为使用的`fr`单位，所以整体的 grid cell 可以占满整个 container 的纵向剩余空间
