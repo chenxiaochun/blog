@@ -610,39 +610,15 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 ### ➡️ `justify-content`、`align-content`和`place-content`
 
-有时候，我们用`grid-template-rows`和`grid-template-columns`在对 grid container 划分时，用的可能都是`px`等绝对单位。这就可能使得所有行或者列加起来的尺寸还是小于 grid container 的整体尺寸，还留有一定的富余空间
+有时候，我们用`grid-template-rows`和`grid-template-columns`在对 grid container 划分时，用的可能都是`px`等绝对单位。这就可能使得所有 grid cell 的整体尺寸是小于 grid container 的整体尺寸，还留有一定的富余空间
 
-还是拿示例来说：
+在下面的示例中：
 
 * grid container 的宽度和高度都是`500px`
-* 使用`grid-template-rows: repeat(3, 1fr);`定义了 3 行，因为使用的`fr`单位，所以整体的 grid cell 可以占满整个 container 的纵向剩余空间
-* 使用`  grid-template-columns: repeat(2, 100px);`定义了 2 列，每列的宽度为`100px`，总共也才`200px`。整体的 grid cell 无法占满整个 container 的横向空间
+* 使用`grid-template-rows: repeat(3, 100px);`定义了 3 行。因此，整体的 grid cell 高度是小于 grid container 高度的
+* 使用`grid-template-columns: repeat(3, 100px);`定义了 3 列。因此，整体的 grid cell 宽度是小于 grid container 宽度的
 
-```css
-.container {
-  background: #eee;
-  display: grid;
-  width: 500px;
-  height: 500px;
-  grid-template-rows: repeat(3, 1fr);
-  grid-template-columns: repeat(2, 100px);
-  justify-content: center;
-}
-```
-
-<img src="https://img13.360buyimg.com/imagetools/jfs/t1/211449/7/24393/16910/62ce8bcfEed882ed4/a922e97b00e80385.png" width="500">
-
-这时候，就可以使用`justify-content`来整体控制所有 grid cell 的水平对齐方向。例如，使其水平居中对齐：
-
-```css
-.container{
-  justify-content: center;
-}
-```
-
-<img src="https://img10.360buyimg.com/imagetools/jfs/t1/142714/30/27416/14051/62ce8a06E3cb4851a/8ca1bae68d9fa8b1.png" width="500" />
-
-修改一下代码，使其水平和垂直方向都是居中：
+这就使得，我们可以控制 grid cell 在 grid container 中的对齐方式了。例如，使用`justify-content: center`将整体的 grid cell 水平居中对齐：
 
 ```css
 .container {
@@ -651,28 +627,71 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
   width: 500px;
   height: 500px;
   grid-template-rows: repeat(3, 100px);
-  grid-template-columns: repeat(2, 100px);
+  grid-template-columns: repeat(3, 100px);
+  justify-content: center;
+}
+```
+
+<img src="https://img14.360buyimg.com/imagetools/jfs/t1/223257/11/18048/11482/62f31d39E109f5c2a/46067720dee692fa.png" width="500">
+
+控制整体 grid cell 水平居右对齐：
+
+```css
+.container{
+  justify-content: end;
+}
+```
+
+<img src="https://img10.360buyimg.com/imagetools/jfs/t1/170417/28/29261/11532/62f31da6E894a8dc1/788e62c94a61d5e4.png" width="500" />
+
+控制整体 grid cell，使其水平和垂直方向都是居中对齐：
+
+```css
+.container {
   justify-content: center;
   align-content: center;
 }
 ```
 
-也可以使用`place-content`进行简写：
+<img src="https://img13.360buyimg.com/imagetools/jfs/t1/165587/6/27084/9838/62f31e1fE5a9ebbd3/e09e7ea23349d18a.png" width="500" />
+
+控制多余的空间能够在 grid cell 周围环绕对齐：
 
 ```css
-.container{
-  place-content: center;
+.container {
+  justify-content: space-around;
+  align-content: space-around;
 }
 ```
 
-<img src="https://img10.360buyimg.com/imagetools/jfs/t1/105846/31/31167/13205/62ce8cbbE437db7c8/373836d989073cfb.png" width="500" />
+<img src="https://img14.360buyimg.com/imagetools/jfs/t1/164813/40/30251/29277/62f31e8eE1183f811/1b7ea1262a4059be.png" width="500" />
+
+```css
+.container {
+  justify-content: space-between;
+  align-content: space-between;
+}
+```
+
+<img src="https://img12.360buyimg.com/imagetools/jfs/t1/156254/19/28944/39131/62f31f87Ea4f2f76a/b98110c3bbf2faad.png" width="500" />
+
+`place-content`是`justify-content`、`align-content`两个属性的简写形式
 
 ### ➡️ `grid-auto-rows`、`grid-auto-columns`
 
-其实`grid-auto-rows`、`grid-auto-columns`和`grid-template-rows`、`grid-template-columns`的作用是一样的，都是用来给 grid container 划分行列。但它们之间的最大区别就在于前者多了一些**自动**的特性，
-毕竟名字中就带着一个『auto』
+```
+grid-auto-rows
+grid-auto-columns
+```
 
-例如在下面示例中 grid container 有四个 grid item，每个 item 都设置了背景色：
+```
+grid-template-rows
+grid-template-columns
+```
+
+其实这两组属性的作用是非常类似的，都是用来给 grid container 划分行列。但它们之间的最大区别就在于前者多了一些**自动**的特性，毕竟名字中就带着一个『auto』。那它到底是如何自动的？来看下面的示例
+
+在下面示例中 grid container 有四个 grid item，每个 item 都设置了背景色：
 
 ```html
 <div class="container">
@@ -708,7 +727,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
-那默认情况下，它会渲染成这样。四个子元素会纵向平分 grid container 的剩余空间：
+我们没有做任何特别的声明。那默认情况下，它会渲染成这样。四个子元素会纵向平分 grid container 的剩余空间：
 
 <img src="https://img14.360buyimg.com/imagetools/jfs/t1/137478/13/22385/3675/62cf7d91E339f4558/c02f5d27050975b7.png" width="500" />
 
