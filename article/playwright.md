@@ -1,4 +1,4 @@
-`playwright`配置文件说明：
+playwright 配置文件说明：
 
 ```ts
 import type { PlaywrightTestConfig } from '@playwright/test'
@@ -21,3 +21,25 @@ npx playwright cr https://XXX.top --save-storage cway
 ```
 npx playwright cr https://XXX.top --load-storage cway
 ```
+
+发起 fetch 请求：
+
+```ts
+const cookieString = ''
+
+test('test', async ({ browser, page }) => {
+  const context = await request.newContext({
+    baseURL: 'http://hdj.jd.com/',
+  })
+
+  const userInfo = await context.get('/api/xxx', {
+    headers: {
+      cookie: cookieString,
+    },
+  })
+  const json = await userInfo.text()
+  console.log(json)
+})
+
+```
+
