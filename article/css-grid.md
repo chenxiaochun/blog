@@ -439,7 +439,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
-在下面示例中，grid container 中的五个 grid item 宽度都设置成了`100px`。所以，grid item 的宽度是比 grid cell 要小。这时候，就可以控制 grid item 在 grid cell 中的水平对齐方向了。例如，给`.item-a`添加`justify-self: center`使其水平居中：
+在下面示例中，grid container 拥有五个 grid item。比如给`.item-a`添加`justify-self: center`使其水平居中：
 
 ```html
 <div class="container">
@@ -459,10 +459,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
   height: 500px;
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(3, 1fr);
-}
-
-.container div {
-  width: 100px;
+  grid-gap: 10px;
 }
 
 .item-a {
@@ -493,7 +490,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
-<img src="https://img13.360buyimg.com/imagetools/jfs/t1/207131/27/24856/12165/62e1098bEa4d8aa3c/309942a35701ee96.png" width="500" />
+<img src="https://img11.360buyimg.com/imagetools/jfs/t1/23964/5/18783/21289/62fa1819Ef918c0bf/6d74707231b8cb59.png" width="500" />
 
 其它几个属性值的功能也都很好理解，具体效果可以看看下面的示例图：
 
