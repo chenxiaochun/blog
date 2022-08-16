@@ -540,6 +540,8 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 
 ### ➡️ `justify-items`、`align-items`和`place-items`
 
+> 🧑‍💻 CodePen 在线示例：https://codepen.io/sjzcxc/pen/rNdQWJq  
+
 这几个属性用于 grid container 元素，用来控制所有的 grid item 在 grid cell 里的对齐方向。前者用来控制水平方向对齐，后者用来控制垂直方向对齐。也都是有四个属性值：
 
 ```css
@@ -573,13 +575,7 @@ grid-template: grid-template-areas grid-template-rows / grid-template-column
 }
 ```
 
-所有 grid item 的宽度都设置为`100px`。这样 grid item 的宽度才会小于 grid cell 的宽度（这里为`1fr=500/3`）。这样才能使用`justify-items`控制其水平对齐方向。例如可以都使其水平居中对齐：
-
 ```css
-.container div {
-  width: 100px;
-}
-
 .item-a {
   background: orange;
 }
