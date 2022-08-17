@@ -20,7 +20,9 @@ css grid，也可以简称为 grid 布局。是一种完全和以前所有其它
 
 因为概念和属性比较多。所以，即使学完所有属性的含义之后，如果没有深刻的实践。后面想用的时候，依然会被它复杂的属性关系搞糊涂。因此，我在最后面附了一张**整个 grid 布局属性关系图**。这张图也是我边学习，边整理出来的。只要能把这张图『印』到大脑里，你就能很容易的搞懂它们之间的属性关系。然后再去翻阅文档查看具体的使用方法，就容易的多了
 
-另外，在本教程的全文描述中，我都是用的英文名称，没有使用中文名称。是因为我觉得使用英文单词可以准确表达它的含义，强行翻译成中文反而会使得有些概念比较拗口，不利于理解
+另外，在本教程的全文描述中，所有的主要术语都是用的英文，是因为我觉得使用英文单词完全可以准确表达它的含义，强行翻译成中文反而会使得有些概念比较拗口，不利于理解
+
+下面来看第一个术语：
 
 ### ➡ grid container
 
@@ -86,11 +88,11 @@ css grid，也可以简称为 grid 布局。是一种完全和以前所有其它
 
 ## `grid`属性集合介绍
 
-grid 的属性非常多，有的只能用于 grid container，而有的只能用于 grid item，这个在实际应用时一定要注意
+grid 体系中的属性非常多，有的只能用于 grid container，而有的只能用于 grid item，这个在实际应用时一定要注意
 
 ### ➡️ `display`
 
-`display`属性上新增了两个属性值，用于定义一个 grid container：
+为了能够定义一个 grid container，在`display`属性上新增了两个属性值：
 
 * `grid`：生成一个块级元素的 grid container
 * `inline-grid`：生成一个内联级元素的 grid container
@@ -101,13 +103,15 @@ grid 的属性非常多，有的只能用于 grid container，而有的只能用
 }
 ```
 
+此属性的特殊之处在于它可以将任意一个元素定义为 grid container，即使它是一个 grid item。也就是说，grid container 的定义是可以嵌套使用的
+
 一个元素变成 grid container 之后，在用 chrome 开发者工具查看它时，就会发现旁边多了一个 grid 开关标识：
 
 <img src="https://img13.360buyimg.com/imagetools/jfs/t1/98296/2/29772/4163/62c64819Edade5d5c/3d28134a8d2fea3e.png" width="400" />
 
 打开此开关，再点击右侧的`layout`标签页，会发现里面有若干选项。通过它们，可以查看关于 grid 布局的更多信息，具体如何使用后面会详细介绍，先知道有这样一个功能就行：
 
-<img src="https://img11.360buyimg.com/imagetools/jfs/t1/78723/7/20056/72460/62c6497dE5761f263/3df5529107f082b2.png" width="600">
+<img src="https://img11.360buyimg.com/imagetools/jfs/t1/78723/7/20056/72460/62c6497dE5761f263/3df5529107f082b2.png" width="600" />
 
 ### ➡️ `grid-template-columns`和`grid-template-rows`
 
