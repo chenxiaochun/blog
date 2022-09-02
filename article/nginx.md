@@ -16,9 +16,12 @@ nginx -V
 http {
   server {
     listen 80; # 监听指定端口
-    server_name vhost1.com www.vhost1.com;
-    index index.html index.html;
-    root /Users/chenxiaochun/Documents/MyProject/test/vhost1;
+    access_log logs/error.log; # 指定错误日志的位置
+    
+    location / {
+      autoindex on; # 开启可查看目录
+      root /Users/chenxiaochun/Documents/MyProject/test;
+    }  
   }
 }
 ```
@@ -34,6 +37,22 @@ http {
     root /Users/chenxiaochun/Documents/MyProject/test/vhost1;
     sub_filter vhost cxc;
     sub_filter_once off;
+  }
+}
+```
+
+返回指定的状态码，`return`的第二个参数是可选的，可指定要跳转的 url：
+```nginx
+http {
+  server {
+    listen 80; # 监听指定端口
+    access_log logs/error.log; # 指定错误日志的位置
+    
+    location / {
+      autoindex on; # 开启可查看目录
+      root /Users/chenxiaochun/Documents/MyProject/test;
+      return 301 http://baidu.com;
+    }  
   }
 }
 ```
