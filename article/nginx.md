@@ -19,6 +19,9 @@ location ^~ /images/ {
 }
 ```
 
+`$geo`，获取客户端的 ip 地址  
+
+
 添加一个虚拟服务器：
 
 ```nginx
@@ -51,6 +54,7 @@ http {
 ```
 
 返回指定的状态码，`return`的第二个参数是可选的，可指定要跳转的 url：
+
 ```nginx
 http {
   server {
@@ -65,3 +69,55 @@ http {
   }
 }
 ```
+
+### `try_files`指令
+
+用来检查与 uri 相同的文件是否存在。如果没有，则返回一个默认图片：
+
+```nginx
+http {
+  server {
+    root /www/data
+    
+    location /images/ {
+      try_files $uri /images/default.gif;
+    }
+  }
+}
+```
+
+用来检查与 uri 相同的文件是否存在。如果都没有，则返回指定的状态码：
+
+```nginx
+http {
+  server {
+    root /www/data
+    
+    location /images/ {
+      try_files $uri $uri/ $uri.html =404;
+    }
+  }
+}
+```
+
+如果尾部带有斜线的 uri 不能匹配到现有的文件和目录，则将请求重定向到`@backend`：
+
+```nginx
+http {
+  server {
+    root /www/data
+    
+    location / {
+      try_files $uri $uri/ @backend;
+    }
+    
+    location @backend {
+      proxy_pass http://backend.example.com;
+    }
+  }
+}
+```
+
+### 相关资源
+
+* https://www.yiibai.com/nginx/nginx-feature.html
