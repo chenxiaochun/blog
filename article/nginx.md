@@ -77,7 +77,7 @@ http {
 ```nginx
 http {
   server {
-    root /www/data
+    root /www/data;
     
     location /images/ {
       try_files $uri /images/default.gif;
@@ -91,7 +91,7 @@ http {
 ```nginx
 http {
   server {
-    root /www/data
+    root /www/data;
     
     location /images/ {
       try_files $uri $uri/ $uri.html =404;
@@ -105,7 +105,7 @@ http {
 ```nginx
 http {
   server {
-    root /www/data
+    root /www/data;
     
     location / {
       try_files $uri $uri/ @backend;
@@ -117,6 +117,94 @@ http {
   }
 }
 ```
+
+### `proxy_pass`指令
+
+将指定的请求传递到指定的地址上：
+
+```nginx
+http {
+  server {
+    location /some/path/ {
+      proxy_pass http://www.example.com/link/;
+    }
+  }
+}
+```
+
+请求上游服务器时，需要添加额外的请求头，使用`proxy_set_header`：
+
+```nginx
+http {
+  server {
+    location /some/path/ {
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_pass http://www.example.com/link/;
+    }
+  }
+}
+```
+
+### `add_header`指令
+
+给浏览器返回一些头信息：
+
+```nginx
+http {
+  server {
+    location /some/path/ {
+      add_header X-Real-IP $remote_addr;
+      proxy_pass http://www.example.com/link/;
+    }
+  }
+}
+```
+
+### 压缩和解压缩
+
+启用压缩：
+
+```
+gzip on
+```
+
+默认情况下，仅会对`text/html`的 mime 类型进行压缩。如果想支持其它 mime 类型，需要设置：
+
+```
+gzip_types text/plain application/xml;
+```
+
+指定要压缩的响应的最小长度，默认为 20 字节。例如，修改为 1000 字节：
+
+```
+gzip_min_length 1000;
+```
+
+默认情况下，nginx 不会对代理服务器的响应进行压缩（由响应头中的 via 字段来确定是否为代理服务器）。如果想对其压缩，需要使用`gzip_proxied`指令进行配置。
+它支持多个参数，用于告诉 nignx 来压缩哪种代理请求：
+
+```
+gzip_proxied no-cache no-store private expired auth;
+```
+
+发送压缩文件。例如针对`/file`请求，nginx 会尝试发送`/file.gz`文件。如果文件不存在，或者客户端不支持 gzip，则 nginx 将发送未压缩的文件：
+
+```
+location / {
+  gzip_static on;
+}
+```
+
+如果客户端不支持 gzip，需要进行解压缩：
+
+```
+gunzip on;
+```
+
+
+
+
+
 
 ### 相关资源
 
