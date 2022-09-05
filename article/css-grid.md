@@ -111,7 +111,7 @@ grid 体系中的属性非常多，有的只能用于 grid container，而有的
 
 打开此开关，再点击右侧的`layout`标签页，会发现里面有若干选项。通过它们，可以查看关于 grid 布局的更多信息，具体如何使用后面会详细介绍，先知道有这样一个功能就行：
 
-<img src="https://img11.360buyimg.com/imagetools/jfs/t1/78723/7/20056/72460/62c6497dE5761f263/3df5529107f082b2.png" width="600" />
+<img src="https://img11.360buyimg.com/imagetools/jfs/t1/78723/7/20056/72460/62c6497dE5761f263/3df5529107f082b2.png" />
 
 ### ➡️ `grid-template-columns`和`grid-template-rows`
 
