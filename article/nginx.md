@@ -40,7 +40,7 @@ location ^~ /images/ {
 `$host` | 表示客户端请求头部中的 Host 字段。如果 Host 字段不存在，则以实际处理的 server（虚拟主机）名称代替。如果 Host 字段中带有端口，如`IP：PORT`，那么`$host`是去掉端口的，它的值为 IP。`$host`是全小写的。这些特性与 http＿HEADER 中的 http＿host 不同， http＿host 只是『忠实』地取出 Host 头部对应的值
 `$hostname` | 表示 Nginx 所在机器的名称，与 gethostbyname 调用返回的值相同
 `$http_HEADER` | 表示当前 HTTP 请求中相应头部的值。HEADER 名称全小写。例如，用`$http＿host`表示请求中 Host 头部对应的值
-`$sentSsent_http_HEADER` | 表示返回客户端的 HTTP 响应中相应头部的值。HEADER 名称全小写。例如，用`$http＿content＿type`表示响应中 Content-Type 头部对应的值
+`$sent_http_HEADER` | 表示返回客户端的 HTTP 响应中相应头部的值。HEADER 名称全小写。例如，用`$sent_http＿content＿type`表示响应中 Content-Type 头部对应的值
 `$is_args` | 表示请求中的URI是否带参数，如果带参数，`$is＿args`值为`?`，如果不带参数，则是空字符串
 `$limit_rate` | 表示当前连接的限速是多少，0 表示无限速
 `$nginx_version` | 表示当前Nginx的版本号，如`1.0.14`
