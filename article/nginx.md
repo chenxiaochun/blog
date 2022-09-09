@@ -15,7 +15,7 @@ nginx -V
 * `~`，表示匹配 URI 时是大小写敏感的  
 * `~*`，表示忽略 URI 大小写敏感  
 * `^~`，表示匹配 URI 时，只需要前半部分能够匹配即可，例如：
-```
+```nginx
 location ^~ /images/ {
   # 以 images 开头的请求都会被匹配上
 }
@@ -26,32 +26,32 @@ location ^~ /images/ {
 参数名 | 意义
 ---|---
 `$geo` | 获取客户端的 ip 地址  
-`$arg_PARAMETER` | http 请求中某个参数的值，例如`/index.html?size＝100`，可以用`$arg＿size`取得 100 这个值
+`$arg_PARAMETER` | http 请求中某个参数的值，例如`/index.html?size＝100`，可以用`$arg_size`取得 100 这个值
 `$args` | http 请求中的完整参数。例如，在请求`/index.html?_w=120&_h=120`中，`$args`表示字符串`_w=120&_h=120`
 `$binary_remote_addr` | 二进制格式的客户端地址。例如`\x0A\xEOB\xOE`
 `$body_bytes_sent` | 表示在向客户端发送的 http 响应中，包体部分的字节数
-`$content_length` | 表示客户端请求头部中的 Content—Length 字段
-`$content_type` | 表示客户端请求头部中的 Content—Type 字段
+`$content_length` | 表示客户端请求头部中的 Content-Length 字段
+`$content_type` | 表示客户端请求头部中的 Content-Type 字段
 `$cookie_COOKIE` | 表示在客户端请求头部中的 cookie 字段
 `$document_root` | 表示当前请求所使用的 root 配置项的值
 `$uri` | 表示当前请求的 URI，不带任何参数
 `$document_uri` | 与`$uri`含义相同
-`$request_uri` | 表示客户端发来的原始请求 uri，带完整的参数。`$uri`和`$document＿uri`未必是用户的原始请求，在内部重定向后可能是重定向后的 URI，而`$request＿uri`永远不会改变，始终是客户端的原始 uri
-`$host` | 表示客户端请求头部中的 Host 字段。如果 Host 字段不存在，则以实际处理的 server（虚拟主机）名称代替。如果 Host 字段中带有端口，如`IP：PORT`，那么`$host`是去掉端口的，它的值为 IP。`$host`是全小写的。这些特性与 http＿HEADER 中的 http＿host 不同， http＿host 只是『忠实』地取出 Host 头部对应的值
+`$request_uri` | 表示客户端发来的原始请求 uri，带完整的参数。`$uri`和`$document_uri`未必是用户的原始请求，在内部重定向后可能是重定向后的 URI，而`$request_uri`永远不会改变，始终是客户端的原始 uri
+`$host` | 表示客户端请求头部中的 Host 字段。如果 Host 字段不存在，则以实际处理的 server（虚拟主机）名称代替。如果 Host 字段中带有端口，如`IP：PORT`，那么`$host`是去掉端口的，它的值为 IP。`$host`是全小写的。这些特性与 http_HEADER 中的 http_host 不同， http_host 只是『忠实』地取出 Host 头部对应的值
 `$hostname` | 表示 Nginx 所在机器的名称，与 gethostbyname 调用返回的值相同
-`$http_HEADER` | 表示当前 HTTP 请求中相应头部的值。HEADER 名称全小写。例如，用`$http＿host`表示请求中 Host 头部对应的值
-`$sent_http_HEADER` | 表示返回客户端的 HTTP 响应中相应头部的值。HEADER 名称全小写。例如，用`$sent_http＿content＿type`表示响应中 Content-Type 头部对应的值
-`$is_args` | 表示请求中的URI是否带参数，如果带参数，`$is＿args`值为`?`，如果不带参数，则是空字符串
+`$http_HEADER` | 表示当前 HTTP 请求中相应头部的值。HEADER 名称全小写。例如，用`$http_host`表示请求中 Host 头部对应的值
+`$sent_http_HEADER` | 表示返回客户端的 HTTP 响应中相应头部的值。HEADER 名称全小写。例如，用`$sent_http_content_type`表示响应中 Content-Type 头部对应的值
+`$is_args` | 表示请求中的URI是否带参数，如果带参数，`$is_args`值为`?`，如果不带参数，则是空字符串
 `$limit_rate` | 表示当前连接的限速是多少，0 表示无限速
 `$nginx_version` | 表示当前Nginx的版本号，如`1.0.14`
-`$query_string` | 请求 URI 中的参数，与`$args`相同，然而`$query＿string`是只读的不会改变
+`$query_string` | 请求 URI 中的参数，与`$args`相同，然而`$query_string`是只读的不会改变
 `$remote_addr` | 表示客户端的地址
 `$remote_port` | 表示客户端连接使用的端口
 `$remote_user` | 表示使用 Auth Basic Module 时定义的用户名
 `$request_filename` | 表示用户请求中的 URI 经过 root 或 alias 转换后的文件路径
-`$request_body` | 表示 HTTP 请求中的包体，该参数只在`proxy＿pass`或`fastcgi＿pass`中有意义
+`$request_body` | 表示 HTTP 请求中的包体，该参数只在`proxy_pass`或`fastcgi_pass`中有意义
 `$request_body_file` | 表示 HTTP 请求中的包体存储的临时文件名
-`$request_completion` | 当请求已经全部完成时，其值为『ok』。若没有完成，就要返回客户端，则其值为空字符串；或者在断点续传等情况下使用HTTP range 访问的并不是文件的最后一块，那么其值也是空字符串
+`$request_completion` | 当请求已经全部完成时，其值为`ok`。若没有完成，就要返回客户端，则其值为空字符串；或者在断点续传等情况下使用HTTP range 访问的并不是文件的最后一块，那么其值也是空字符串
 `$request_method` | 表示 HTTP 请求的方法名，如 GET、PUT、POST 等
 `$scheme` | 表示 HTTP scheme，如在请求 https://nginx.com/ 中表示 https
 `$server_addr` | 表示服务器地址
