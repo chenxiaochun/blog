@@ -225,3 +225,4 @@ yarn add antd4@npm:antd@4.19.5
 
 ### 参考资料：
 * https://nodesource.com/blog/eleven-npm-tricks-that-will-knock-your-wombat-socks-off/
+* 奇舞团-规范升级 npm 包：https://mp.weixin.qq.com/s/FjU7wj9nRuzlx1O94LB5Wg
