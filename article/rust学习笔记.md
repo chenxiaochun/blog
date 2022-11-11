@@ -123,6 +123,7 @@ fn main() {
 
 * Rust and WebAssembly：https://rustwasm.github.io/
 * Rust 圣经：https://course.rs
+* 通过例子学 rust：https://rustwiki.org/zh-CN/rust-by-example/index.html
 * Writing an OS in Rust：https://os.phil-opp.com/?continueFlag=337dcf70445017414c8f184d55fb43c4
 * 微软 Rust 基础教程，最大特点是通过一个完整的待办事项示例来进行讲解：https://docs.microsoft.com/zh-cn/learn/paths/rust-first-steps/
 * 字节提供的 Rust 包下载镜像：https://rsproxy.cn/
