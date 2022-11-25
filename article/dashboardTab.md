@@ -163,9 +163,56 @@
 
 到目前为止，主要交互样式貌似都实现了。但这里还有一个细节没有实现。就是 tab 与 tabPanel 的衔接位置的圆角没有实现
 
-圆角怎么实现呢？把刚才用来遮挡的伪元素拉长一点儿。为了自适应 tab 宽度，可以设置成`width: calc( 100% + 10px)`
+圆角怎么实现呢？这里我准备使用 css 的径向渐变来实现这个圆角。先来看一个最简单的径向渐变示例
+
+下面是一个从红色渐变到蓝色的简单示例，从左到右，每个参数的含义为：
+
+1. `circle`，表示生成一个圆形渐变。因为它还支持椭圆形渐变`ellipse`
+2. `50px`，表示圆形渐变的半径是多少
+3. `at 50% 50%`，表示圆形渐变的圆心位置
+4. `red blue`，表示从红色渐变到蓝色
+
+```css
+div{
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle 50px at 50% 50%, red, blue);
+}
+```
+
+<img src="https://img10.360buyimg.com/imagetools/jfs/t1/199064/29/28019/63585/638066f0E94ee7516/5c774f2de564bac5.png" width="200" />
+
+明白渐变的基本用法之后，将圆形渐变的坐标改为右上角，渐变颜色改成从透明色渐变到蓝色：
+
+```css
+div{
+  background: radial-gradient(circle 50px at 100% 0, transparent, blue);
+}
+```
+
+<img src="https://img13.360buyimg.com/imagetools/jfs/t1/176443/36/31135/38029/638067e0E061bd01a/534b6895be364f4a.png" width="200" />
+
+可以看出来。两种颜色之间没有明显的界限，还是缓慢渐变过去的。再进一步，如果给透明色添加一个`50px`的渐变范围，再看一下效果：
+
+```css
+div{
+  background: radial-gradient(circle 50px at 100% 0, transparent 50px, blue);
+}
+
+```
+
+<img src="https://img10.360buyimg.com/imagetools/jfs/t1/126214/22/25533/28154/63806862E33f7c0f4/980599c0d550d167.png" width="200" />
+
+所以，为什么是`50px`？改为`40px`或者`60px`是否可以？
+
+这是因为圆形渐变的半径是`50px`，而渐变中第一个颜色的渐变停止范围就达到了`50px`，仅仅是第一个颜色就已经覆盖了整个圆形，也就不存在和其它颜色的过渡了。因此，你设置成`40px`不可以，但只要设置成大于`50px`都是可以的
+
+明白了上面的原理，再来实现我们项目中这个 tab 圆角就很简单了
+
+首先，需要把刚才用来遮挡的伪元素拉长一点儿。为了自适应 tab 宽度，可以设置成`width: calc( 100% + 10px )`
 
 <img src="https://img11.360buyimg.com/imagetools/jfs/t1/169857/31/32539/10707/637b3572E6ba0f128/cc4bf52271b99347.jpg" />
+
 
 然后把突出来的部分，使用径向渐变将其变成一个内圆角：
 
