@@ -10,7 +10,7 @@ nginx -s reload
 nginx -V
 ```
 
-### 标识符
+## 标识符
 
 * `~`，表示匹配 URI 时是大小写敏感的  
 * `~*`，表示忽略 URI 大小写敏感  
@@ -21,45 +21,8 @@ location ^~ /images/ {
 }
 ```
 
-### 内置变量参数
 
-参数名 | 意义
----|---
-`$geo` | 获取客户端的 ip 地址  
-`$arg_PARAMETER` | http 请求中某个参数的值，例如`/index.html?size＝100`，可以用`$arg_size`取得 100 这个值
-`$args` | http 请求中的完整参数。例如，在请求`/index.html?_w=120&_h=120`中，`$args`表示字符串`_w=120&_h=120`
-`$binary_remote_addr` | 二进制格式的客户端地址。例如`\x0A\xEOB\xOE`
-`$body_bytes_sent` | 表示在向客户端发送的 http 响应中，包体部分的字节数
-`$content_length` | 表示客户端请求头部中的 Content-Length 字段
-`$content_type` | 表示客户端请求头部中的 Content-Type 字段
-`$cookie_COOKIE` | 表示在客户端请求头部中的 cookie 字段
-`$document_root` | 表示当前请求所使用的 root 配置项的值
-`$uri` | 表示当前请求的 URI，不带任何参数
-`$document_uri` | 与`$uri`含义相同
-`$request_uri` | 表示客户端发来的原始请求 uri，带完整的参数。`$uri`和`$document_uri`未必是用户的原始请求，在内部重定向后可能是重定向后的 URI，而`$request_uri`永远不会改变，始终是客户端的原始 uri
-`$host` | 表示客户端请求头部中的 Host 字段。如果 Host 字段不存在，则以实际处理的 server（虚拟主机）名称代替。如果 Host 字段中带有端口，如`IP：PORT`，那么`$host`是去掉端口的，它的值为 IP。`$host`是全小写的。这些特性与 http_HEADER 中的 http_host 不同， http_host 只是『忠实』地取出 Host 头部对应的值
-`$hostname` | 表示 Nginx 所在机器的名称，与 gethostbyname 调用返回的值相同
-`$http_HEADER` | 表示当前 HTTP 请求中相应头部的值。HEADER 名称全小写。例如，用`$http_host`表示请求中 Host 头部对应的值
-`$sent_http_HEADER` | 表示返回客户端的 HTTP 响应中相应头部的值。HEADER 名称全小写。例如，用`$sent_http_content_type`表示响应中 Content-Type 头部对应的值
-`$is_args` | 表示请求中的URI是否带参数，如果带参数，`$is_args`值为`?`，如果不带参数，则是空字符串
-`$limit_rate` | 表示当前连接的限速是多少，0 表示无限速
-`$nginx_version` | 表示当前Nginx的版本号，如`1.0.14`
-`$query_string` | 请求 URI 中的参数，与`$args`相同，然而`$query_string`是只读的不会改变
-`$remote_addr` | 表示客户端的地址
-`$remote_port` | 表示客户端连接使用的端口
-`$remote_user` | 表示使用 Auth Basic Module 时定义的用户名
-`$request_filename` | 表示用户请求中的 URI 经过 root 或 alias 转换后的文件路径
-`$request_body` | 表示 HTTP 请求中的包体，该参数只在`proxy_pass`或`fastcgi_pass`中有意义
-`$request_body_file` | 表示 HTTP 请求中的包体存储的临时文件名
-`$request_completion` | 当请求已经全部完成时，其值为`ok`。若没有完成，就要返回客户端，则其值为空字符串；或者在断点续传等情况下使用HTTP range 访问的并不是文件的最后一块，那么其值也是空字符串
-`$request_method` | 表示 HTTP 请求的方法名，如 GET、PUT、POST 等
-`$scheme` | 表示 HTTP scheme，如在请求 https://nginx.com/ 中表示 https
-`$server_addr` | 表示服务器地址
-`$server_name` | 表示服务器名称
-`$server_port` | 表示服务器端口
-`$server_protocol` | 表示服务器向客户端发送响应的协议，如 HTTP／1.1 或 HTTP／1.0
-
-### 虚拟服务器
+## 虚拟服务器
 
 添加一个虚拟服务器：
 
@@ -77,7 +40,7 @@ http {
 }
 ```
 
-使用`sub_filter`替换指定的响应内容：
+使用`sub_filter`替换指定的响应内容。例如，将响应内容中的所有『vhost』文本替换成『cxc』：
 
 ```nginx
 http {
@@ -109,7 +72,7 @@ http {
 }
 ```
 
-### `try_files`指令
+## `try_files`指令
 
 用来检查与 uri 相同的文件是否存在。如果没有，则返回一个默认图片：
 
@@ -157,7 +120,7 @@ http {
 }
 ```
 
-### `proxy_pass`指令
+## `proxy_pass`指令
 
 将指定的请求传递到指定的地址上：
 
@@ -184,7 +147,39 @@ http {
 }
 ```
 
-### `add_header`指令
+### `location`截取代理路径
+
+主要有两种逻辑：
+
+一是`proxy_pass`后面加`/`的时候：
+
+当我们访问`http://44.179.118.54:80/shop/xxx`的时候，nginx 会把`/shop/`后面的部分直接拼接到`proxy_pass`上。那我们实际访问的是`http://44.179.118.54:8007/xxx`
+
+```nginx
+location ^~ /shop/ {
+  proxy_pass  http://44.179.118.54:8007/;
+}
+```
+
+上面的配置等同于：
+
+```nginx
+location ~ ^/addrdata/(.*) {
+  proxy_pass  http://44.179.118.54:8007/$1$is_args$args;
+}
+```
+
+二是`proxy_pass`后面不加`/`的时候，实际就是一层普通的代理，不会对地址做任何修改：
+
+当访问`http://44.179.118.54:80/shop/xxx`，实际访问的就是`http://44.179.118.54:8007/shop/xxx`
+
+```nginx
+location ^~ /shop/ {
+  proxy_pass  http://44.179.118.54:8007;
+}
+```
+
+## `add_header`指令
 
 给浏览器返回一些头信息：
 
@@ -199,7 +194,7 @@ http {
 }
 ```
 
-### 压缩和解压缩
+## 压缩和解压缩
 
 启用压缩：
 
@@ -240,7 +235,7 @@ location / {
 gunzip on;
 ```
 
-### 启用响应缓存
+## 启用响应缓存
 
 在顶层的 http 上下文中添加`proxy_cache_path`指令。第一个参数指定缓存内容的本地系统路径。`keys_zone`用来指定元数据的共享内存名称和大小：
 
@@ -266,7 +261,7 @@ http {
 }
 ```
 
-### 正向代理
+## 正向代理
 
 正向代理，指的是一个位于客户端和原始服务器之间的服务器。为了从原始服务器获取内容，客户端向代理服务器发送一个请求并指定目标（原始服务器），然后由代理服务器向原始服务器转发请求，并将获得的内容返回给客户端
 
@@ -309,7 +304,45 @@ http {
 curl http://www.baidu.com/ -v -x 127.0.0.1:80
 ```
 
-### 相关资源
+## 内置变量参数
+
+参数名 | 意义
+---|---
+`$geo` | 获取客户端的 ip 地址  
+`$arg_PARAMETER` | http 请求中某个参数的值，例如`/index.html?size＝100`，可以用`$arg_size`取得 100 这个值
+`$args` | http 请求中的完整参数。例如，在请求`/index.html?_w=120&_h=120`中，`$args`表示字符串`_w=120&_h=120`
+`$binary_remote_addr` | 二进制格式的客户端地址。例如`\x0A\xEOB\xOE`
+`$body_bytes_sent` | 表示在向客户端发送的 http 响应中，包体部分的字节数
+`$content_length` | 表示客户端请求头部中的 Content-Length 字段
+`$content_type` | 表示客户端请求头部中的 Content-Type 字段
+`$cookie_COOKIE` | 表示在客户端请求头部中的 cookie 字段
+`$document_root` | 表示当前请求所使用的 root 配置项的值
+`$uri` | 表示当前请求的 URI，不带任何参数
+`$document_uri` | 与`$uri`含义相同
+`$request_uri` | 表示客户端发来的原始请求 uri，带完整的参数。`$uri`和`$document_uri`未必是用户的原始请求，在内部重定向后可能是重定向后的 URI，而`$request_uri`永远不会改变，始终是客户端的原始 uri
+`$host` | 表示客户端请求头部中的 Host 字段。如果 Host 字段不存在，则以实际处理的 server（虚拟主机）名称代替。如果 Host 字段中带有端口，如`IP：PORT`，那么`$host`是去掉端口的，它的值为 IP。`$host`是全小写的。这些特性与 http_HEADER 中的 http_host 不同， http_host 只是『忠实』地取出 Host 头部对应的值
+`$hostname` | 表示 Nginx 所在机器的名称，与 gethostbyname 调用返回的值相同
+`$http_HEADER` | 表示当前 HTTP 请求中相应头部的值。HEADER 名称全小写。例如，用`$http_host`表示请求中 Host 头部对应的值
+`$sent_http_HEADER` | 表示返回客户端的 HTTP 响应中相应头部的值。HEADER 名称全小写。例如，用`$sent_http_content_type`表示响应中 Content-Type 头部对应的值
+`$is_args` | 表示请求中的URI是否带参数，如果带参数，`$is_args`值为`?`，如果不带参数，则是空字符串
+`$limit_rate` | 表示当前连接的限速是多少，0 表示无限速
+`$nginx_version` | 表示当前Nginx的版本号，如`1.0.14`
+`$query_string` | 请求 URI 中的参数，与`$args`相同，然而`$query_string`是只读的不会改变
+`$remote_addr` | 表示客户端的地址
+`$remote_port` | 表示客户端连接使用的端口
+`$remote_user` | 表示使用 Auth Basic Module 时定义的用户名
+`$request_filename` | 表示用户请求中的 URI 经过 root 或 alias 转换后的文件路径
+`$request_body` | 表示 HTTP 请求中的包体，该参数只在`proxy_pass`或`fastcgi_pass`中有意义
+`$request_body_file` | 表示 HTTP 请求中的包体存储的临时文件名
+`$request_completion` | 当请求已经全部完成时，其值为`ok`。若没有完成，就要返回客户端，则其值为空字符串；或者在断点续传等情况下使用HTTP range 访问的并不是文件的最后一块，那么其值也是空字符串
+`$request_method` | 表示 HTTP 请求的方法名，如 GET、PUT、POST 等
+`$scheme` | 表示 HTTP scheme，如在请求 https://nginx.com/ 中表示 https
+`$server_addr` | 表示服务器地址
+`$server_name` | 表示服务器名称
+`$server_port` | 表示服务器端口
+`$server_protocol` | 表示服务器向客户端发送响应的协议，如 HTTP／1.1 或 HTTP／1.0
+
+## 相关资源
 
 * https://www.yiibai.com/nginx/nginx-feature.html
 * https://bbs.huaweicloud.com/blogs/301714
