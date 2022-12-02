@@ -147,29 +147,41 @@ http {
 }
 ```
 
-### `location`截取代理路径
+## `location`截取代理路径
 
 主要有两种逻辑：
 
-一是`proxy_pass`后面加`/`的时候：
+### 一是`proxy_pass`后面加`/`的时候：
 
 当我们访问`http://44.179.118.54:80/shop/xxx`的时候，nginx 会把`/shop/`后面的部分直接拼接到`proxy_pass`上。那我们实际访问的是`http://44.179.118.54:8007/xxx`
 
+第一种配置方式：
+
+> 注意：如果用这下面这种方式，在要匹配的 location 前面不能加任何标识符，例如`~`。否则，会导致 nginx 语法错误
+
 ```nginx
-location ^~ /shop/ {
+location /shop/ {
   proxy_pass  http://44.179.118.54:8007/;
 }
 ```
 
-上面的配置等同于：
+第二种配置方式：
 
 ```nginx
-location ~ ^/addrdata/(.*) {
+location ~ ^/shop/(.*) {
   proxy_pass  http://44.179.118.54:8007/$1$is_args$args;
 }
 ```
 
-二是`proxy_pass`后面不加`/`的时候，实际就是一层普通的代理，不会对地址做任何修改：
+第三种配置方式：
+
+```nginx
+location ~ /shop(?<section>.+)$ {
+  proxy_pass              http://44.179.118.54:8007/$section?$args;
+}
+```
+
+### 二是`proxy_pass`后面不加`/`的时候，实际就是一层普通的代理，不会对地址做任何修改：
 
 当访问`http://44.179.118.54:80/shop/xxx`，实际访问的就是`http://44.179.118.54:8007/shop/xxx`
 
