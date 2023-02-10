@@ -320,6 +320,34 @@ sum.apply(null, [1, 2, 3])
 // 6
 ```
 
+#### 6、`strictFunctionTypes`
+
+当开启时，ts 会更加严格的检查函数参数的类型正确性
+
+下面是一个关闭此选项的示例。可以看到函数`fn`的参数`x`为`string`类型。`func`函数的参数`ns`类型为`string | number`类型。但是，把`fn`赋值给`func`，然后传入一个数值类型调用它，并没有报类型错误
+
+```ts
+function fn(x: string) {
+  console.log("Hello, " + x.toLowerCase());
+}
+ 
+type StringOrNumberFunc = (ns: string | number) => void;
+ 
+// Unsafe assignment
+let func: StringOrNumberFunc = fn;
+// Unsafe call - will crash
+func(10);
+```
+
+如果开启此选项，就会收到类型错误：
+
+```
+Type '(x: string) => void' is not assignable to type 'StringOrNumberFunc'.
+  Types of parameters 'x' and 'ns' are incompatible.
+    Type 'string | number' is not assignable to type 'string'.
+      Type 'number' is not assignable to type 'string'.
+```
+
 ## 参考资料
 
 * https://dev.to/briwa/how-strict-is-typescript-s-strict-mode-311a
