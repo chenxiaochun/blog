@@ -115,6 +115,31 @@ listenEvent(EventType.Mouse, (e: number) => console.log(e));
 
 ## 可选参数和 rest 参数
 
+## 关于 class 类型
+
+Class 类型的工作方式与纯对象和接口是差不多的。但 class 有一个不同的地方在于，它还拥有实例类型和静态类型两种情况。但是在对两个 class 类型进行对比，只会对它们的实例成员进行对比。Class 的静态成员和构造函数不会影响它们之间的兼容性
+
+```ts
+class Animal {
+  feet: number;
+  constructor(name: string, numFeet: number) {}
+}
+class Size {
+  feet: number;
+  constructor(numFeet: number) {}
+}
+let a: Animal;
+let s: Size;
+a = s; // OK
+s = a; // OK
+```
+
+### Class 中的 private 成员和 protected 成员
+
+两个 class 类型进行对比时，它们的 private 成员和 protected 成员是会对两者的类型兼容有影响的
+
+在对两个 class 实例类型进行检查时，如果一方某在某个 private 成员，那么另外一方，也要存在相同
+
 
 
 
