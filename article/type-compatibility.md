@@ -62,13 +62,11 @@ items.forEach((item) => console.log(item));
 
 2. 以返回值进行对比
 
-如果两个函数没有参数，返回值是不同的，又该如何对比呢？
+如果两个函数没有参数，但返回值是不同的，又该如何对比呢？
 
-下面两个函数，`x`的返回值只有一个属性，而`y`的返回值有两个属性
+下面两个函数中，`x`的返回值只有一个属性，而`y`的返回值有两个属性。可以看到，`y`可以赋值给`x`，但`x`不能赋值给`y`。能否赋值的逻辑颠倒过来了
 
-可以看到，能否赋值的逻辑颠倒过来了。`y`可以赋值给`x`，但`x`不能赋值给`y`
-
-这是因为 ts 的类型系统规定，函数`x`的返回值必须是`y`返回值的子类型才可以
+这是因为 ts 的类型系统规定，被赋值的函数`x`的返回值必须是`y`返回值的子类型
 
 ```ts
 let x = () => ({ name: "Alice" });
@@ -117,7 +115,9 @@ listenEvent(EventType.Mouse, (e: number) => console.log(e));
 
 ## 关于 class 类型
 
-Class 类型的工作方式与纯对象和接口是差不多的。但 class 有一个不同的地方在于，它还拥有实例类型和静态类型两种情况。但是在对两个 class 类型进行对比，只会对它们的实例成员进行对比。Class 的静态成员和构造函数不会影响它们之间的兼容性
+Class 类型的对比方式和纯对象以及接口的对比方式是差不多的。但 class 有一个不同的地方在于，它还拥有实例类型和静态类型两种情况。但是在对两个 class 类型进行对比时，只会对它们的实例成员进行对比。Class 的静态成员和构造函数不会影响它们之间的兼容性
+
+从以下实例可以看出，虽然两个 Class 的构造函数参数类型是不同的，但它们刘黛希是互相兼容的：
 
 ```ts
 class Animal {
@@ -136,9 +136,78 @@ s = a; // OK
 
 ### Class 中的 private 成员和 protected 成员
 
-两个 class 类型进行对比时，它们的 private 成员和 protected 成员是会对两者的类型兼容有影响的
+Class 的 private 成员和 protected 成员也会对它们的类型兼容产生影响
 
-在对两个 class 实例类型进行检查时，如果一方某在某个 private 成员，那么另外一方，也要存在相同
+在对两个 class 的实例类型进行检查时，就是双方的 private 和 protected 成员必须都必须要继承于同一个父类才是互相兼容的
+
+在下面实例中，Animal 和 Size 的 private 成员都继承于 Parent。因此，它们的实例都是互相兼容的：
+
+```ts
+class Parent {
+    private name = 'cxc'
+}
+
+class Animal extends Parent {
+  feet: number = 1;
+  constructor(name: string, numFeet: number) {
+    super()
+  }
+}
+
+class Size extends Parent {
+  feet: number = 2;
+  constructor(numFeet: number) {
+    super()
+  }
+}
+
+let a: Animal = new Animal('cxc', 1);
+let s: Size = new Size(2);
+
+a = s; // OK
+s = a; // OK
+```
+
+如果继承的是不同父类，即使它们的结构和类型是相同的，那么它们的实例也是互不兼容的
+
+下面示例中，虽然 Animal 和 Size 都拥有相同名称类型的 private 成员。但因为它们继承的是不同父类，所以实例之间是互不兼容的：
+
+```ts
+class Parent1 {
+    private name = 'cxc'
+}
+
+class Parent2 {
+    private name = 'cxc'
+}
+
+class Animal extends Parent1 {
+  feet: number = 1;
+  constructor(name: string, numFeet: number) {
+    super()
+  }
+}
+
+class Size extends Parent2 {
+  feet: number = 2;
+  constructor(numFeet: number) {
+    super()
+  }
+}
+
+let a: Animal = new Animal('cxc', 1);
+let s: Size = new Size(2);
+
+a = s; // OK
+s = a; // OK
+```
+
+```
+Type 'Size' is not assignable to type 'Animal'.
+  Types have separate declarations of a private property 'name'.
+Type 'Animal' is not assignable to type 'Size'.
+  Types have separate declarations of a private property 'name'.
+```
 
 
 
