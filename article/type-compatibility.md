@@ -138,9 +138,9 @@ s = a; // OK
 
 Class 的 private 成员和 protected 成员也会对它们的类型兼容产生影响
 
-在对两个 class 的实例类型进行检查时，就是双方的 private 和 protected 成员必须都必须要继承于同一个父类才是互相兼容的
+在对两个 class 的实例类型进行检查时，双方的 private 和 protected 成员必须都必须要继承于同一个父类才是互相兼容的
 
-在下面实例中，Animal 和 Size 的 private 成员都继承于 Parent。因此，它们的实例都是互相兼容的：
+例如下面实例中，Animal 和 Size 的 private 成员都继承于 Parent。因此，它们的实例就是互相兼容的：
 
 ```ts
 class Parent {
@@ -168,9 +168,9 @@ a = s; // OK
 s = a; // OK
 ```
 
-如果继承的是不同父类，即使它们的结构和类型是相同的，那么它们的实例也是互不兼容的
+但如果两个 Class 继承的是不同父类，即使它们的结构和类型是完全相同的，它们的实例也是互不兼容的
 
-下面示例中，虽然 Animal 和 Size 都拥有相同名称类型的 private 成员。但因为它们继承的是不同父类，所以实例之间是互不兼容的：
+下面示例中，Animal 和 Size 继承了不同的父类，虽然它们都拥有相同名称和类型的 private 成员，但它们的实例仍然是互不兼容的：
 
 ```ts
 class Parent1 {
@@ -209,6 +209,43 @@ Type 'Animal' is not assignable to type 'Size'.
   Types have separate declarations of a private property 'name'.
 ```
 
+那如果，把这两个父类的 private 修饰符去掉呢？两个 Class 的实例类型就互相兼容了
 
+## 带有泛型参数的类型兼容
 
+在 TypeScript 的类型系统中，泛型参数会影响两个类型的兼容性
 
+在下面示例中，可以看到 x 和 y 都是 Empty 类型，虽然传入的泛型参数类型不同。但 x 和 y 依然是互相兼容的
+
+因为在 Empty 类型中，仅仅只是声明了泛型参数，并没有真正去使用它。因此，这个泛型参数就不会影响两个类型的兼容性
+
+```ts
+interface Empty<T> {}
+let x: Empty<number>;
+let y: Empty<string>;
+x = y;
+```
+
+再看下面示例，x 和 y 在声明类型时传入了不同的泛型参数，而且在 NotEmpty 中还确实使用了它的泛型参数。因此，x 和 y 的类型肯定是互不兼容的：
+
+```ts
+interface NotEmpty<T> {
+  data: T;
+}
+let x: NotEmpty<number>;
+let y: NotEmpty<string>;
+x = y;
+```
+
+对于无需给泛型参数指定特定类型的情况，其实相当于给其指定为了 any 类型。因此，下面两者之间的类型一定是互相兼容的：
+
+```ts
+let identity = function <T>(x: T): T {
+  return x
+};
+let reverse = function <U>(y: U): U {
+  return y
+};
+identity = reverse;
+reverse = identity;
+```
