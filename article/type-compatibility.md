@@ -113,7 +113,7 @@ listenEvent(EventType.Mouse, (e: number) => console.log(e));
 
 ## 可选参数和 rest 参数
 
-## 关于 class 类型
+## Class 类型的兼容性对比
 
 Class 类型的对比方式和纯对象以及接口的对比方式是差不多的。但 class 有一个不同的地方在于，它还拥有实例类型和静态类型两种情况。但是在对两个 class 类型进行对比时，只会对它们的实例成员进行对比。Class 的静态成员和构造函数不会影响它们之间的兼容性
 
@@ -209,7 +209,7 @@ Type 'Animal' is not assignable to type 'Size'.
   Types have separate declarations of a private property 'name'.
 ```
 
-那如果，把这两个父类的 private 修饰符去掉呢？两个 Class 的实例类型就互相兼容了
+那如果把这两个父类的 private 修饰符去掉，那么两个 Class 的实例类型也就互相兼容了
 
 ## 带有泛型参数的类型兼容
 
@@ -226,7 +226,7 @@ let y: Empty<string>;
 x = y;
 ```
 
-再看下面示例，x 和 y 在声明类型时传入了不同的泛型参数，而且在 NotEmpty 中还确实使用了它的泛型参数。因此，x 和 y 的类型肯定是互不兼容的：
+再看下面示例，x 和 y 在声明类型时传入了不同的泛型参数，而且在 NotEmpty 中还确实使用了此泛型参数。因此，x 和 y 就不是互相兼容的类型：
 
 ```ts
 interface NotEmpty<T> {
@@ -249,3 +249,24 @@ let reverse = function <U>(y: U): U {
 identity = reverse;
 reverse = identity;
 ```
+
+## 子类型的兼容性
+
+在 TypeScript 中，有以下若干常用子类型。当 [strictNullChecks](https://www.typescriptlang.org/tsconfig#strictNullChecks) 设置为 false 时，各子类型之间的兼容性表现为以下形式：
+
+|   | `any` | `unknown` | `object` | `void` | `undefined` | `null` | `never`
+--- | --- | --- | --- | --- |--- | --- | --- |
+`any`→     |    | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ |
+`unknown`→ | ✅ |    | ❌ | ❌ | ❌ | ❌ | ❌ |
+`object`→  | ✅ | ✅ |    | ❌ | ❌ | ❌ | ❌ |
+`void`→    | ✅ | ✅ | ❌ |    | ❌ | ❌ | ❌ |
+`undefined`→| ✅ | ✅ | ✅ | ✅ |    | ✅ | ❌ |
+`null`→    | ✅ | ✅ | ✅ | ✅ | ✅ |    | ❌ | 
+`never`→   | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |    |
+
+从上面表格数据可以得出以下几条结论：
+
+* 任何类型都可以赋值给自身类型
+* 任何类型都可以赋值给 any 和 unknown 类型
+* unknown 和 never 基本是一对相反类型。unknown 可以接受任何子类型的赋值；never 除了本身，不接受任何其它子类型的赋值。unknown 除了 any 和自身，不能赋值给任何其它子类型；never 却可以赋值给任何子类型
+* void 不接受除了 any、unknown、never、undefined 和 null 以外其它子类型的赋值与被赋值
