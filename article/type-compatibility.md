@@ -113,7 +113,49 @@ listenEvent(EventType.Mouse, (e: number) => console.log(e));
 
 ## 可选参数和 rest 参数
 
-## Class 类型的兼容性对比
+当函数间进行类型对比时，可选参数和必选参数是可以互换的。只要其中一方的函数参数都是可选参数，那么另外一方即使没有定义相应的参数，它们之间的类型也是互相兼容的
+
+例如，下面的 foo 函数带有两个可选参数 a 和 b。那么 bar 函数即使没有定义这两个参数，它和 foo 的类型也是互相兼容的。反之，如果一方有一个必选参数，那么另外一方也必须定义与之类型相匹配的参数
+
+```ts
+let foo = (a?: string, b?: number) => {}
+let bar = () => {}
+
+foo = bar
+bar = foo
+```
+
+...
+
+## 函数重载
+
+当函数有类型重载定义时，两个函数如果想类型兼容，就必须双方都具有相同的类型定义才可以
+
+## 枚举
+
+枚举和数值类型都是互相兼容的。但是不同枚举间的值是不兼容的
+
+例如，下面示例中想将`Color.Green`赋值给`Status.Ready`，就是报类型错误
+
+```ts
+enum Status {
+  Ready,
+  Waiting,
+}
+enum Color {
+  Red,
+  Blue,
+  Green,
+}
+let ready = Status.Ready;
+ready = Color.Green; // Error
+```
+
+```
+Type 'Color.Green' is not assignable to type 'Status'.
+```
+
+## Class 类型兼容性
 
 Class 类型的对比方式和纯对象以及接口的对比方式是差不多的。但 class 有一个不同的地方在于，它还拥有实例类型和静态类型两种情况。但是在对两个 class 类型进行对比时，只会对它们的实例成员进行对比。Class 的静态成员和构造函数不会影响它们之间的兼容性
 
@@ -144,7 +186,7 @@ Class 的 private 成员和 protected 成员也会对它们的类型兼容产生
 
 ```ts
 class Parent {
-    private name = 'cxc'
+  private name = 'cxc'
 }
 
 class Animal extends Parent {
@@ -252,7 +294,7 @@ reverse = identity;
 
 ## 子类型的兼容性
 
-在 TypeScript 中，有以下若干常用子类型。当 [strictNullChecks](https://www.typescriptlang.org/tsconfig#strictNullChecks) 设置为 false 时，各子类型之间的兼容性表现为以下形式：
+在 TypeScript 中，有以下若干常用子类型。当 [strictNullChecks](https://www.typescriptlang.org/tsconfig#strictNullChecks) 设置为 false 时，各子类型之间的兼容性表现形式为：
 
 |   | `any` | `unknown` | `object` | `void` | `undefined` | `null` | `never`
 --- | --- | --- | --- | --- |--- | --- | --- |
