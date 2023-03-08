@@ -125,7 +125,21 @@ foo = bar
 bar = foo
 ```
 
-...
+一个函数的 rest 参数，会被当成一个具有无限数列的可选参数来进行处理
+
+从类型的角度来看，这可能不太合理。但因为实际上，可选参数的用法并没有那么深入人心。在代码运行时，将可选参数换成 undefined 传入也是等价的
+
+下面的示例中需要给调用的回调函数传入数量不等的参数：
+
+```ts
+function invokeLater(args: any[], callback: (...args: any[]) => void) {
+  /* ... Invoke callback with 'args' ... */
+}
+// Unsound - invokeLater "might" provide any number of arguments
+invokeLater([1, 2], (x, y) => console.log(x + ", " + y));
+// Confusing (x and y are actually required) and undiscoverable
+invokeLater([1, 2], (x?, y?) => console.log(x + ", " + y));
+```
 
 ## 函数重载
 
@@ -157,9 +171,11 @@ Type 'Color.Green' is not assignable to type 'Status'.
 
 ## Class 类型兼容性
 
-Class 类型的对比方式和纯对象以及接口的对比方式是差不多的。但 class 有一个不同的地方在于，它还拥有实例类型和静态类型两种情况。但是在对两个 class 类型进行对比时，只会对它们的实例成员进行对比。Class 的静态成员和构造函数不会影响它们之间的兼容性
+Class 之间的类型兼容对比方式，与纯对象和接口的对比方式是类似的。但 class 类型与这两者存在不同的是，它同时拥有实例类型和静态类型两种场景。但是 class 之间做类型对比时，只会对它们的实例成员类型进行对比。Class 的静态成员类型和构造函数类型不会影响 class 类型之间的兼容性
 
-从以下实例可以看出，虽然两个 Class 的构造函数参数类型是不同的，但它们刘黛希是互相兼容的：
+在下面示例中，两个 class 都拥有一个相同类型的属性`feet: number`。但是它们构造函数的参数个数和类型明显都是不一样的，Animal 拥有两个参数，Size 只拥有一个参数
+
+但并不影响两个 class 实例之间的类型兼容性
 
 ```ts
 class Animal {
@@ -176,13 +192,13 @@ a = s; // OK
 s = a; // OK
 ```
 
-### Class 中的 private 成员和 protected 成员
+#### Class 的 private 成员和 protected 成员
 
-Class 的 private 成员和 protected 成员也会对它们的类型兼容产生影响
+Class 的 private 成员和 protected 成员会影响它们之间的类型兼容性
 
-在对两个 class 的实例类型进行检查时，双方的 private 和 protected 成员必须都必须要继承于同一个父类才是互相兼容的
+也就是说，class 之间进行类型对比时，双方的 private 和 protected 成员必须都必须要继承于同一个父类才是互相兼容的
 
-例如下面实例中，Animal 和 Size 的 private 成员都继承于 Parent。因此，它们的实例就是互相兼容的：
+例如下面实例中，Parent 中定义了一个 `private name = 'cxc'`，Animal 和 Size 都继承了它。这样并不会影响两个 class 的实例类型的兼容性：
 
 ```ts
 class Parent {
@@ -210,17 +226,17 @@ a = s; // OK
 s = a; // OK
 ```
 
-但如果两个 Class 继承的是不同父类，即使它们的结构和类型是完全相同的，它们的实例也是互不兼容的
+但是，如果两个 Class 继承的是不同父类，即使继承的两个父类的结构和类型是完全相同的，那么两个子类的实例类型也是不兼容的
 
-下面示例中，Animal 和 Size 继承了不同的父类，虽然它们都拥有相同名称和类型的 private 成员，但它们的实例仍然是互不兼容的：
+下面示例中，Animal 和 Size 继承了不同的父类，虽然两个父类都定义了`private name = 'cxc'`，但两个子类的实例类型仍然是互不兼容的：
 
 ```ts
 class Parent1 {
-    private name = 'cxc'
+  private name = 'cxc'
 }
 
 class Parent2 {
-    private name = 'cxc'
+  private name = 'cxc'
 }
 
 class Animal extends Parent1 {
@@ -251,7 +267,7 @@ Type 'Animal' is not assignable to type 'Size'.
   Types have separate declarations of a private property 'name'.
 ```
 
-那如果把这两个父类的 private 修饰符去掉，那么两个 Class 的实例类型也就互相兼容了
+那如果，把这两个父类的 private 修饰符去掉，这两个 Class 的实例类型也就互相兼容了
 
 ## 带有泛型参数的类型兼容
 
