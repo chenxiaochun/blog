@@ -12,7 +12,7 @@ return `星期${week}`
 // 参考链接：https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString
 ```
 
-`diff`，以某个维度对时间进行比较，返回值为其差值：
+`diff()`，以某个维度对时间进行比较，返回值为其差值：
 
 ```js
 moment().add(2, 'day').diff(moment(), 'day') 
@@ -25,18 +25,34 @@ moment().add(2, 'day').diff(moment(), 'day')
 moment().add(2, 'day').isAfter(moment(), 'day') 
 ```
 
-`startOf`，将时间设置为以某个维度开始的时间：
+`startOf()`，将时间设置为以某个维度开始的时间：
 
 ```js
 moment().startOf('year') // 设置为今年的 00:00:00
 moment().startOf('day') // 设置为今天的 00:00:00
 ```
 
-`endOf`，将时间设置为以某个维度结束的时间：
+`endOf()`，将时间设置为以某个维度结束的时间：
 
 ```js
 moment().endOf('year') // 设置为今年的 23:59:59
 moment().endOf('day') // 设置为今天的 23:59:59
+```
+
+`clone()`，复制一个 moment 对象：
+
+```js
+moment().clone()
+```
+
+`year()`、`month()`、`date()`、`hour()`、`minute()`、`second()`，如果不带参数，用来获取一个 moment 对象的具体时间值。如果指定了参数，用来指定此 moment 对象的具体时间值：
+
+```js
+const m = moment()
+m.year() // 2023
+
+m.year(2020)
+m.year() // 2020
 ```
 
 
