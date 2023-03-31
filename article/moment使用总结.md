@@ -19,14 +19,20 @@ moment().add(2, 'day').diff(moment(), 'day')
 // 结果为 2
 ```
 
-`startOf`，将时间设置为以某个点的开始时间：
+`isBefore`、`isAfter`、`isSame`、`isSameOrBefore`、`isSameOrAfter`，以某个维度判断一个时间是否小于、大于、等于、小于等于、大于等于另一个时间：
+
+```js
+moment().add(2, 'day').isAfter(moment(), 'day') 
+```
+
+`startOf`，将时间设置为以某个维度开始的时间：
 
 ```js
 moment().startOf('year') // 设置为今年的 00:00:00
 moment().startOf('day') // 设置为今天的 00:00:00
 ```
 
-`endOf`，将时间设置为以某个点的结束时间：
+`endOf`，将时间设置为以某个维度结束的时间：
 
 ```js
 moment().endOf('year') // 设置为今年的 23:59:59
