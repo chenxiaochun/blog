@@ -101,38 +101,27 @@ y = x; // Error, because x() lacks a location property
 
 ## 函数参数双变
 
-当对函数参数进行对比时，能否能赋值成功，取决于源函数的参数是否可以赋值给目标函数的参数，反过来也是同理
-
-这其实是不健壮的，因为调用者可能会在最后给函数多传一个额外参数。但在函数定义的位置，却缺少这个特定类型的参数。实际情况中，虽然这种错误很少出现。但是，允许这种形式可以使代码开启更多的编写模式
-
 ```ts
-enum EventType {
-  Mouse,
-  Keyboard,
+type Foo = {
+    a: string
 }
-interface Event {
-  timestamp: number;
+
+type Bar = {
+    a: string
+    b: number
 }
-interface MyMouseEvent extends Event {
-  x: number;
-  y: number;
+
+let foo = (p: Foo) => {
+    console.log(p)
 }
-interface MyKeyEvent extends Event {
-  keyCode: number;
+
+let bar = (p: Bar) => {
+    console.log(p)
 }
-function listenEvent(eventType: EventType, handler: (n: Event) => void) {
-  /* ... */
-}
-// Unsound, but useful and common
-listenEvent(EventType.Mouse, (e: MyMouseEvent) => console.log(e.x + "," + e.y));
-// Undesirable alternatives in presence of soundness
-listenEvent(EventType.Mouse, (e: Event) =>
-  console.log((e as MyMouseEvent).x + "," + (e as MyMouseEvent).y)
-);
-listenEvent(EventType.Mouse, ((e: MyMouseEvent) =>
-  console.log(e.x + "," + e.y)) as (e: Event) => void);
-// Still disallowed (clear error). Type safety enforced for wholly incompatible types
-listenEvent(EventType.Mouse, (e: number) => console.log(e));
+
+bar = foo
+
+foo = bar
 ```
 
 ## 可选参数和 rest 参数
@@ -195,7 +184,7 @@ Type 'Color.Green' is not assignable to type 'Status'.
 
 ## Class 类型兼容性
 
-Class 之间的类型兼容对比方式，与纯对象和接口的对比方式是类似的。但 class 类型与这两者存在不同的是，它同时拥有实例类型和静态类型两种场景。但是 class 之间做类型对比时，只会对它们的实例成员类型进行对比。Class 的静态成员类型和构造函数类型不会影响 class 类型之间的兼容性
+Class 之间的类型兼容对比方式，与纯对象和接口的对比方式是类似的。但 class 类型与这两者存在不同的是，它同时拥有实例类型和静态类型两种场景。但是 class 之间只会对它们的实例成员类型进行对比。Class 的静态成员类型和构造函数类型不会影响它们之间的类型兼容性
 
 在下面示例中，两个 class 都拥有一个相同类型的属性`feet: number`。但是它们构造函数的参数个数和类型明显都是不一样的，Animal 拥有两个参数，Size 只拥有一个参数
 
@@ -218,9 +207,9 @@ s = a; // OK
 
 #### Class 的 private 成员和 protected 成员
 
-Class 的 private 成员和 protected 成员会影响它们之间的类型兼容性
+Class 的`private`成员和`protected`成员会影响它们之间的类型兼容性
 
-也就是说，class 之间进行类型对比时，双方的 private 和 protected 成员必须都必须要继承于同一个父类才是互相兼容的
+也就是说，class 之间进行类型对比时，双方的 private 和 protected 成员都必须要继承于同一个父类才是互相兼容的
 
 例如下面实例中，Parent 中定义了一个 `private name = 'cxc'`，Animal 和 Size 都继承了它。这样并不会影响两个 class 的实例类型的兼容性：
 
@@ -291,7 +280,7 @@ Type 'Animal' is not assignable to type 'Size'.
   Types have separate declarations of a private property 'name'.
 ```
 
-那如果，把这两个父类的 private 修饰符去掉，这两个 Class 的实例类型也就互相兼容了
+那如果，把这两个父类的`private`修饰符去掉，这两个 Class 的实例类型也就互相兼容了。`protected`修饰符同理
 
 ## 泛型的类型兼容性
 
@@ -319,7 +308,7 @@ let y: NotEmpty<string>;
 x = y;
 ```
 
-还有一种情况，就是虽然定义了泛型参数，但在实际使用时，并没有给其传入具体的类型，这其实相当于给此类型参数指定成了 any 类型。因此，下面的`identity`和`reverse`依然是互相兼容的类型：
+还有一种情况，就是虽然定义了泛型参数，但在实际使用时，并没有给其传入具体的类型，这其实相当于给此类型参数指定成了`any`类型。因此，下面的`identity`和`reverse`依然是互相兼容的类型：
 
 ```ts
 let identity = function <T>(x: T): T {
@@ -357,3 +346,4 @@ reverse = identity;
 
 * https://jkchao.github.io/typescript-book-chinese/faqs/type-system-behavior.html
 * https://segmentfault.com/a/1190000021898024
+* https://mp.weixin.qq.com/s/NW37P_vcvSyCKD_3333HGQ?forceh5=1

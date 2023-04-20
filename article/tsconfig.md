@@ -348,6 +348,24 @@ Type '(x: string) => void' is not assignable to type 'StringOrNumberFunc'.
       Type 'number' is not assignable to type 'string'.
 ```
 
+TS 官方团队在开发此特性时，发现这大量这种不安全的类型定义。尤其是存在于类的方法中，有些还在 DOM 方法中。因此，此选项只会作用于函数语法，而不适用于下面这种方法调用：
+
+```ts
+type Methodish = {
+  func(x: string | number): void;
+};
+ 
+function fn(x: string) {
+  console.log("Hello, " + x.toLowerCase());
+}
+ 
+// Ultimately an unsafe assignment, but not detected
+const m: Methodish = {
+  func: fn,
+};
+m.func(10);
+```
+
 ## 参考资料
 
 * https://dev.to/briwa/how-strict-is-typescript-s-strict-mode-311a
