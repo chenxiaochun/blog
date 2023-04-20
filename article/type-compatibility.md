@@ -1,4 +1,28 @@
-TS 的类型兼容是基于结构子类型的。结构类型是一种仅基于类型的成员来关联类型的方式。来看下面的示例：
+TS 的类型系统是结构化的。结构化类型系统背后的思想是如果它们的成员类型是兼容的，则它们就是兼容的
+
+例如，下面的`Foo`和`Bar`类型都具有相同类型的属性`x`。虽然两个类型的名称不一样，但因为它们具有相同的结构化类型。因此，使用两个类型声明的变量`a`和`b`的类型依然是互相兼容的：
+
+```ts
+type Foo = {
+    x: string
+}
+
+type Bar = {
+    x: string
+}
+
+let a: Foo = {
+    x: '1'
+}
+
+let b: Bar = {
+    x: '2'
+}
+
+a = b
+```
+
+但是在 C# 或者 Java 中，使用的是名义化类型，就是两个类型的**名称**必须完全相同，才是互相兼容的类型。因此，上面的情况在这些语言中是不被允许的
 
 ```ts
 interface Pet {
@@ -328,3 +352,8 @@ reverse = identity;
 * 任何类型都可以赋值给 any 和 unknown 类型
 * unknown 和 never 基本是一对相反类型。unknown 可以接受任何子类型的赋值；never 除了本身，不接受任何其它子类型的赋值。unknown 除了 any 和自身，不能赋值给任何其它子类型；never 却可以赋值给任何子类型
 * void 不接受除了 any、unknown、never、undefined 和 null 以外其它子类型的赋值与被赋值
+
+## 参考资料
+
+* https://jkchao.github.io/typescript-book-chinese/faqs/type-system-behavior.html
+* https://segmentfault.com/a/1190000021898024
