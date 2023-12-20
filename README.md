@@ -1,3 +1,4 @@
+* [github 博客标题彩虹背景动效实现探索](./article/text-background-linear-rainbow.md)
 * [css grid 深入理解](./article/css-grid.md)
 * [html script 标签的`crossorigin`属性使用说明](./article/script.crossorigin.md)
 * [git根据条件自动调整配置](./article/git根据条件自动调整配置.md)
