@@ -147,6 +147,16 @@ http {
 }
 ```
 
+## `if`指令
+
+使用`if`指令判断如果当前为 https 请求，上游服务重定向到另外一个服务
+
+```
+if ($http_referer ~* "https://") {
+    proxy_pass https://example.com;
+}
+```
+
 ## `location`截取代理路径
 
 主要有两种逻辑：
