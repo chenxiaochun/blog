@@ -26,6 +26,8 @@ Command/Ctrl + Shift + P
 ---|---
 `Capture node screenshot` | 对选中的当前 dom 节点截图
 `Capture full size screenshot` | 全屏截图。如果当前页面有滚动条，它会自动往下滚动截图
+`Show Search` | 打开 More Tools 中的搜索工具。可全局搜索当前站点中的文本。或者使用`Command + Option + F`快捷键打开
+`Show Coverage` | 查看 js/css 的覆盖率。点击文件链接，会在`Source`面板中展示对应文件的覆盖情况。红色表示未用到的代码
 
 ## `Elements`
 
@@ -47,6 +49,10 @@ Command/Ctrl + Shift + P
 ---|---
 `$_` | 可以引用上一次的执行结果
 `copy()`函数 | 可以将传入的值复制到剪贴板，例如执行`copy(location)`就能将`location`对象中的值复制到剪贴板
+`keys()` | 快速查看一个对象的所有 key
+`values()` | 快速查看一个对象的所有 value
+`console.log()` | 打印日志
+`console.table()` | 以表格的形式打印对象或者数组数据。如果传入的是一个普通类型，则直接输出
 
 ## `Network`
 
