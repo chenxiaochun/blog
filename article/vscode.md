@@ -9,3 +9,7 @@
 ```
 
 <img src="https://img11.360buyimg.com/imagetools/jfs/t1/246803/23/25050/30160/673ee145F6d2e6560/9ce454d59247daa2.png" width="200" />
+
+### 快捷键
+
+`F12`，跳转到类型定义处
