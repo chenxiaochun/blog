@@ -12,4 +12,12 @@
 
 ### 快捷键
 
-`F12`，跳转到类型定义处
+`F12`，可以自动跳转到函数/类型定义的位置
+
+### 自定义 window.title
+
+```json
+{
+  "window.title": "${activeRepositoryBranchName}/${folderName}"
+}
+```
