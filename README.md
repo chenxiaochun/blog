@@ -1,3 +1,4 @@
+* [随手记](./article/FreeNotes.md)
 * [github 博客标题彩虹背景动效实现探索](./article/text-background-linear-rainbow.md)
 * [css grid 深入理解](./article/css-grid.md)
 * [html script 标签的`crossorigin`属性使用说明](./article/script.crossorigin.md)
