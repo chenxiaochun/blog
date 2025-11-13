@@ -310,4 +310,66 @@ function App() {
 export default App;
 ```
 
-### `useDeferredValue`
+### 使用`use`和`useDeferredValue`处理异步调用
+
+```jsx
+import { Suspense, useDeferredValue, useState, use, memo } from "react";
+
+const sleep = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+const random = async () => {
+  await sleep(1000);
+  return Math.random();
+};
+
+const cache = new Map();
+
+function fetchData(url) {
+  if (!cache.has(url)) {
+    cache.set(url, getData());
+  }
+  return cache.get(url);
+}
+
+async function getData() {
+  return await random();
+}
+
+const List = memo(({ query }) => {
+  const data = use(fetchData(query));
+
+  if (!data) {
+    return null;
+  }
+  return (
+    <div>
+      {query}: {data}
+    </div>
+  );
+});
+
+function App() {
+  const [query, setQuery] = useState("11");
+  const deferredQuery = useDeferredValue(query);
+  const isStale = query !== deferredQuery;
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <div style={{ color: isStale ? "red" : "black" }}>
+          <List query={deferredQuery} />
+        </div>
+      </Suspense>
+    </div>
+  );
+}
+
+export default App;
+```
